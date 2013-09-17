@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="header-title span8">
+		<h1>Assignment Submission</h1>
+	</div>
+	<div class="user-info span4 text-right">
+		<?php 
+			if($studentID){
+				echo "Student ID: ".$studentID;
+				echo '  <a href="index.php?s=logout">(Logout)</a>';
+			}
+		?>
+	</div>
+</div>
+<!-- Navigation -->
+<div class="navbar">
+	<div class="navbar-inner">
+	<ul class="nav">
+		<?php if(!$studentID){ ?>
+			<li <?php if($screen=="home"){echo 'class="active"';}?>><a href="index.php">Home</a></li>
+		<?php } else {?> 
+			<li <?php if($screen=="upload"){echo 'class="active"';}?>><a href="index.php?s=upload">Assigments</a></li>
+			<li <?php if($screen=="stats"){echo 'class="active"';}?>><a href="index.php?s=stats">Statistics</a></li>
+		<?php }?>
+	
+	</ul>
+	</div>
+</div>

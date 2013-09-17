@@ -1,0 +1,47 @@
+<?php 
+$studentID = (isset($this->viewData["studentID"])) ? $this->viewData["studentID"] : null;
+$formStudentID = (isset($this->viewData["formStudentID"])) ? $this->viewData["formStudentID"] : null;
+$papers = (isset($this->viewData["papers"])) ? $this->viewData["papers"] : null;
+$screen = (isset($this->viewData["screen"])) ? $this->viewData["screen"] : null;
+$errorMessage = (isset($this->viewData["error"])) ? $this->viewData["error"] : null;
+$successMessage = (isset($this->viewData["success"])) ? $this->viewData["success"] : null;
+$uploadError = (isset($this->viewData['uploadError'])) ? $this->viewData['uploadError'] : null;
+$uploadFileName = (isset($this->viewData['uploadFileName'])) ? $this->viewData['uploadFileName'] : null;
+$stats = (isset($this->viewData['stats'])) ? $this->viewData['stats'] : null;
+
+?>
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+    	<meta charset="UTF-8">
+	    <title>Assignment Submission Application - Brent Dykgraaf - ID 00037354</title>
+	    <meta name="description" content="The Assignment Submission Application allows submission of assignments.">
+	    <link href="public/css/bootstrap.min.css" rel="stylesheet" media="screen" type="text/css">
+	    <link href="public/css/custom.css" media="screen" rel="stylesheet" type="text/css">
+	    <script type="text/javascript" src="public/js/jquery-1.10.2.min.js" ></script>
+	    <script type="text/javascript" src="public/js/bootstrap.min.js" ></script>
+	    <script type="text/javascript" src="public/js/asa.js" ></script>
+	</head>
+	<body>
+		<div class="container">
+		    <!-- Header -->
+			<?php include "application/templates/layout/header.phtml";?>
+		    <!-- Main content -->
+	    	<div id="jsMessage">
+		  	</div>
+		    <?php if($successMessage){ ?>
+				<div id="goodMessage" class="alert alert-success">
+					<?php echo $successMessage; ?>
+				</div>
+		    <?php } ?>
+		    <?php if($errorMessage){ ?>
+				<div id="badMessage" class="alert alert-error">
+					<?php echo $errorMessage; ?>
+				</div>
+		    <?php } ?>
+		    <?php include "application/templates/pages/".$screen.".phtml";?>
+		    <!-- Footer -->
+			<?php include "application/templates/layout/footer.phtml";?>
+		</div>
+	</body>
+</html>
