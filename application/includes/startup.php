@@ -1,5 +1,4 @@
 <?php
-namespace ASA;
 //Load all the classes
 include 'application/src/Student.php';
 include 'application/src/Paper.php';
