@@ -1,14 +1,19 @@
 <div class="container">
+	<ul class="thumbnails">
 	<?php 
 	foreach ($products as $product){
 	?>
-		<li class="span3">
-			<div class="thumbnail">
-				<img data-src="holder.js/300x200" alt="300x200" style="width: 300px; height: 200px;" src="">
+		<li class="span2">
+			<div class="catThumbnail thumbnail">
+				<img alt="<?php echo $product->getName(); ?>" style="width: 100px; height: 100px;" src="<?php echo $product->getImageName("small"); ?>">
+				<div class="caption catCaption">
+					<a href="index.php?s=product&p=<?php echo $product->getProductId(); ?>">
+						<h4><?php echo $product->getName(); ?></h4>
+					</a>
+					<p><?php echo $product->getDescription("short"); ?></p>
+				</div>
 				<div class="caption">
-					<h3><?php echo $product->getName(); ?></h3>
-					<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-					<p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p>
+				<a href="index.php?s=product&p=<?php echo $product->getProductId(); ?>" class="btn btn-primary catButton">More</a>
 				</div>
 			</div>
 		</li>
@@ -17,4 +22,5 @@
 	<?php
 	}
 	?>
+	</ul>
 </div>

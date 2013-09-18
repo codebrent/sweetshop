@@ -5,3 +5,20 @@
 p .justify {
 	text-align: justify;
 }
+
+.catThumbnail {
+	height: 370px;
+}
+
+.catButton {
+	float: right ;
+}
+
+.proButton {
+
+}
+
+.catCaption {
+	height: 205px ;
+}
+

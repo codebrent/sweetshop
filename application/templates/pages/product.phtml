@@ -1,24 +1,16 @@
 <div class="container">
-
-	<h2>Assignment statistics</h2>
-	<table class="table table-striped">
-		<tr>
-			<th>Paper #</th>
-			<th>Assignment #</th>
-			<th>Submission</th>
-			<th>Total Submissions</th>
-		</tr>
-		<?php foreach($stats as $stat){ ?>		
-			<tr>
-				<td><?php echo $stat[0]; ?></td>
-				<td><?php echo $stat[1]; ?></td>
-				<td><?php echo $stat[2]; ?></td>
-				<td><?php echo $stat[3]; ?></td>
-			</tr>
-		<?php } ?>
-	</table>
-
-
-
+	<div class="thumbnail span10">
+		<img alt="<?php echo $product->getName(); ?>" style="width: 500px;" src="<?php echo $product->getImageName(); ?>">
+		<div class="caption">
+		<h4><?php echo $product->getName(); ?></h4>
+		<h5>Weight: <?php echo $product->getWeight(); ?> g</h5>
+		<h5>Amount in stock: <?php echo $product->getStock(); ?> items</h5>
+		<h5>Price: <?php echo $product->getPrice(); ?></h5>
+		<p><?php echo $product->getDescription(); ?></p>
+		</div>
+		<div class="caption">
+		<a href="index.php?s=product&p=<?php echo $product->getProductId(); ?>" class="btn btn-primary proButton">More</a>
+		</div>
+		</div>
 </div>
 

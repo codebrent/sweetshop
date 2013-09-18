@@ -4,7 +4,7 @@ if($viewData["screen"] == "logout" && $userID != null){
 	header("Location: index.php");  //redirect to index.php
 	
 } else if($viewData["screen"] == "product"){
-
+	$viewData["product"] = new Product($viewData["page"], $dbConnection);
 	
 } else if($viewData["screen"] == "category"){
 	$query = "SELECT * FROM products WHERE categoryId='".$viewData['page']."'";

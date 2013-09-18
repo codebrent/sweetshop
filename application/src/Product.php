@@ -3,6 +3,10 @@ class Product {
 
 	private $productId;
 	private $name;
+	private $description;
+	private $stock;
+	private $weight;
+	private $price;
 	private $dbConnection;
 	
 	
@@ -20,5 +24,62 @@ class Product {
 		}
 		return $this->name;
 	}
+
+	public function getImageName($size = ""){
+		$padded = str_pad($this->productId, 4, "0",STR_PAD_LEFT);
+		if ($size=="small"){
+			$small="s";
+		} else {
+			$small = "";
+		}
+		return "public/img/catalog/".$padded.$small.".jpg";
+	}
 	
+	public function getDescription($size = ""){
+		if (!$this->description){
+			$query = "SELECT description FROM products WHERE productId='".$this->productId."'";
+			$result = mysqli_query($this->dbConnection, $query);
+			$row = $result->fetch_row();
+			$this->description = $row[0];
+		}
+		if ($size=="short" && strlen($this->description) > 100){
+			return substr($this->description, 0, 100)." ...";
+		} else {
+			return $this->description;
+		}
+	}
+	
+	public function getStock(){
+		if (!$this->stock){
+			$query = "SELECT stock FROM products WHERE productId='".$this->productId."'";
+			$result = mysqli_query($this->dbConnection, $query);
+			$row = $result->fetch_row();
+			$this->stock = $row[0];
+		}
+		return $this->stock;
+	}
+	
+	public function getWeight(){
+		if (!$this->weight){
+			$query = "SELECT weight FROM products WHERE productId='".$this->productId."'";
+			$result = mysqli_query($this->dbConnection, $query);
+			$row = $result->fetch_row();
+			$this->weight = $row[0];
+		}
+		return $this->weight;
+	}
+
+	public function getPrice(){
+		if (!$this->price){
+			$query = "SELECT price FROM products WHERE productId='".$this->productId."'";
+			$result = mysqli_query($this->dbConnection, $query);
+			$row = $result->fetch_row();
+			$this->price = $row[0];
+		}
+		return $this->price;
+	}		
+	
+	public function getProductId(){
+		return $this->productId;
+	}
 }

@@ -1,7 +1,9 @@
 <?php 
 $screen = (isset($this->viewData["screen"])) ? $this->viewData["screen"] : null;
 $page = (isset($this->viewData["page"])) ? $this->viewData["page"] : null;
-$products = (isset($this->viewData["products"])) ? $this->viewData["products"] : null;
+$products = (isset($this->viewData["products"])) ? $this->viewData["products"] : null; //product list for category screen
+$product = (isset($this->viewData["product"])) ? $this->viewData["product"] : null; //single product for product detail screen
+
 
 $studentID = (isset($this->viewData["studentID"])) ? $this->viewData["studentID"] : null;
 $formStudentID = (isset($this->viewData["formStudentID"])) ? $this->viewData["formStudentID"] : null;
