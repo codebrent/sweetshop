@@ -1,8 +1,11 @@
 <?php 
+$screen = (isset($this->viewData["screen"])) ? $this->viewData["screen"] : null;
+$page = (isset($this->viewData["page"])) ? $this->viewData["page"] : null;
+$products = (isset($this->viewData["products"])) ? $this->viewData["products"] : null;
+
 $studentID = (isset($this->viewData["studentID"])) ? $this->viewData["studentID"] : null;
 $formStudentID = (isset($this->viewData["formStudentID"])) ? $this->viewData["formStudentID"] : null;
 $papers = (isset($this->viewData["papers"])) ? $this->viewData["papers"] : null;
-$screen = (isset($this->viewData["screen"])) ? $this->viewData["screen"] : null;
 $errorMessage = (isset($this->viewData["error"])) ? $this->viewData["error"] : null;
 $successMessage = (isset($this->viewData["success"])) ? $this->viewData["success"] : null;
 $uploadError = (isset($this->viewData['uploadError'])) ? $this->viewData['uploadError'] : null;

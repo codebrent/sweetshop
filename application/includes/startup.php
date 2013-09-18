@@ -1,21 +1,25 @@
 <?php
 //Load all the classes
-include 'application/src/Student.php';
-include 'application/src/Paper.php';
+include 'application/src/Category.php';
+include 'application/src/Database.php';
 include 'application/src/Layout.php';
-include 'application/src/Filer.php';
-include 'application/src/Reporter.php';
+include 'application/src/Product.php';
+include 'application/src/User.php';
+
+$db = new Database();
+$dbConnection = $db->getDbConnection();
 
 //Start session and get info
 session_start();
-if(isset($_SESSION["studentID"])){
-	$studentID = $_SESSION["studentID"];
-	$viewData["studentID"] = $studentID;
+if(isset($_SESSION["userID"])){
+	$userID = $_SESSION["userID"];
+	$viewData["userID"] = $userID;
 } else {
-	$studentID = null; //not logged in
+	$userID = null; //not logged in
 }
 //Get info about the selected screen
-$viewData["screen"] = filter_input(INPUT_GET,"s",FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH); 
+$viewData["screen"] = filter_input(INPUT_GET,"s",FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+$viewData["page"] = filter_input(INPUT_GET,"p",FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH); 
 
 //Get clean info for login screen
 $formStudentID = filter_input(INPUT_POST,"studentID",FILTER_SANITIZE_NUMBER_INT);

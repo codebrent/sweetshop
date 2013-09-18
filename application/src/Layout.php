@@ -1,6 +1,4 @@
 <?php
-namespace ASA;
-
 class Layout{
 	
 	private $layoutFile = "templates/layout/layout.phtml";
