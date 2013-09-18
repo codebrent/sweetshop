@@ -4,9 +4,13 @@
 	</div>
 	<div class="user-info span4 text-right">
 		<?php 
-			if($studentID){
-				echo "Student ID: ".$studentID;
+			if($userID){
+				echo "User ID: ".$userID;
 				echo '  <a href="index.php?s=logout">(Logout)</a>';
+			} else {
+				echo "Welcome Guest ( ";
+				echo '<a href="index.php?s=login">Login</a> or ';
+				echo '<a href="index.php?s=register">Register</a> )';
 			}
 		?>
 	</div>
@@ -21,5 +25,10 @@
 		<li <?php if($screen=="category" && $page=="3"){echo 'class="active"';}?>><a href="index.php?s=category&p=3">Muffins</a></li>
 		<li <?php if($screen=="category" && $page=="4"){echo 'class="active"';}?>><a href="index.php?s=category&p=4">Biscuits</a></li>
 	</ul>
+	<div class="input-append searchbox">
+		<input class="span2" id="appendedInputButtons" type="text">
+		<button class="btn" type="button">Search</button>
+	</div>
+	<a href="index.php?s=order&p=current" class="btn btn cartbox"><i class="icon-shopping-cart"></i> Cart (empty)</a>
 	</div>
 </div>

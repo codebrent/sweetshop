@@ -14,8 +14,27 @@ if($viewData["screen"] == "logout" && $userID != null){
 		$viewData["products"][] = new Product($row["productId"], $dbConnection);
 	}
 
-} else if($viewData["screen"] == "user" && $userID != null){
-
+} else if($viewData["screen"] == "register"){
+	$viewData["registered"] = null;
+	if ($formUsername){ //formdata has been sent. save user details
+		$user = new User(null, $dbConnection);
+		$user->setUsername($formUsername);
+		$user->setPassword($formPassword);
+		$user->setFirstName($formFirstName);
+		$user->setLastName($formLastName);
+		$user->setAddress1($formAddress1);
+		$user->setAddress2($formAddress2);
+		$user->setSuburb($formSuburb);
+		$user->setCity($formCity);
+		$user->setEmail($formEmail);
+		$user->setPhone($formPhone);
+		$result = $user->save();
+		if ($result == true){
+			$viewData["registered"] = "success";
+		} else {
+			$viewData["registered"] = "failure";
+		}
+	}
 	
 } else {	//'home' or null
 	$viewData["screen"] = "home";

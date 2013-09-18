@@ -21,14 +21,17 @@ if(isset($_SESSION["userID"])){
 $viewData["screen"] = filter_input(INPUT_GET,"s",FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 $viewData["page"] = filter_input(INPUT_GET,"p",FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH); 
 
-//Get clean info for login screen
-$formStudentID = filter_input(INPUT_POST,"studentID",FILTER_SANITIZE_NUMBER_INT);
-$formPassword = filter_input(INPUT_POST,"password", FILTER_SANITIZE_EMAIL);
-//Get file info for upload
-$uploadFileName = (isset($_FILES['fname']['name']))? $_FILES['fname']['name'] : null;
-$uploadTempName =(isset($_FILES['fname']['tmp_name']))? $_FILES['fname']['tmp_name'] : null;
-$uploadError = (isset($_FILES['fname']['error']))? $_FILES['fname']['error'] : null;
-$uploadPaperNo = filter_input(INPUT_POST,"paperNo",FILTER_SANITIZE_NUMBER_INT);
-$uploadAssignmentNo = filter_input(INPUT_POST,"assignmentNo",FILTER_SANITIZE_NUMBER_INT);
+//Get clean info for user login / registration or update of information
+$formUsername = filter_input(INPUT_POST,"username",FILTER_SANITIZE_EMAIL);
+$formPassword = filter_input(INPUT_POST,"password",FILTER_SANITIZE_EMAIL);
+$formFirstName = filter_input(INPUT_POST,"firstname",FILTER_SANITIZE_EMAIL);
+$formLastName = filter_input(INPUT_POST,"lastname",FILTER_SANITIZE_EMAIL);
+$formAddress1 = filter_input(INPUT_POST,"address1",FILTER_SANITIZE_EMAIL);
+$formAddress2 = filter_input(INPUT_POST,"address2",FILTER_SANITIZE_EMAIL);
+$formSuburb = filter_input(INPUT_POST,"suburb",FILTER_SANITIZE_EMAIL);
+$formCity = filter_input(INPUT_POST,"city",FILTER_SANITIZE_EMAIL);
+$formEmail = filter_input(INPUT_POST,"email",FILTER_SANITIZE_EMAIL);
+$formPhone = filter_input(INPUT_POST,"phone",FILTER_SANITIZE_EMAIL);
+
 //For Debugging
 //var_dump($_REQUEST);

@@ -22,3 +22,11 @@ p .justify {
 	height: 205px ;
 }
 
+.searchbox {
+	float: right;
+	padding: 10px 0px 0px 20px;
+}
+
+.cartbox {
+	float: right;
+}

@@ -2,6 +2,7 @@
 class Product {
 
 	private $productId;
+	private $categoryId;
 	private $name;
 	private $description;
 	private $stock;
@@ -78,6 +79,16 @@ class Product {
 		}
 		return $this->price;
 	}		
+
+	public function getCategoryId(){
+		if (!$this->categoryId){
+			$query = "SELECT categoryId FROM products WHERE productId='".$this->productId."'";
+			$result = mysqli_query($this->dbConnection, $query);
+			$row = $result->fetch_row();
+			$this->categoryId = $row[0];
+		}
+		return $this->categoryId;
+	}
 	
 	public function getProductId(){
 		return $this->productId;
