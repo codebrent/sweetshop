@@ -1,0 +1,33 @@
+<div class="container">
+	<?php 
+		if ($loginTry == "failure"){
+			?>
+				<div class="alert alert-error span10">The username or password were not correct.</div>		
+			<?php 
+		}
+	?>
+	<div class="span6">
+		
+		<h5 class="text-info">Login</h5>
+		<form action="index.php?s=login" method="POST" name="loginForm" class="form-horizontal system-login-form" id="loginForm">
+			<div class="control-group">
+				<div class="input-prepend">
+					<span class="add-on"><i class="icon-user"></i></span>
+					<input name="username" type="text" id="fmUsername" placeholder="Username" class="span2" value="<?php echo $fmUsername; ?>">
+				</div>
+				<div id="username-req-alert"></div>
+			</div>
+			<div class="control-group">
+				<div class="input-prepend">
+					<span class="add-on"><i class="icon-lock"></i> </span>
+					<input name="password" type="password" id="fmPassword" placeholder="Password" class="span2" value="">
+				</div>
+				<div id="password-req-alert"></div>				
+			</div>
+			<input name="submit" type="submit" class="btn btn-primary" value="Login">
+		</form>
+	</div>
+	<div class="span4">
+	</div>	
+</div>
+

@@ -13,10 +13,9 @@ $dbConnection = $db->getDbConnection();
 //Start session and get info
 session_start();
 if(isset($_SESSION["userID"])){
-	$userID = $_SESSION["userID"];
-	$viewData["userID"] = $userID;
+	$viewData["user"] = new User($_SESSION["userID"], $dbConnection);
 } else {
-	$userID = null; //not logged in
+	$viewData["user"] = null; //not logged in
 }
 //Get info about the selected screen
 
@@ -24,16 +23,16 @@ $viewData["screen"] = (isset($_GET['s'])) ? Util::cleanPostText($_GET['s']) : nu
 $viewData["page"] = (isset($_GET['p'])) ? Util::cleanPostText($_GET['p']) : null;
 
 //Get clean info for user login / registration or update of information
-$formUsername = (isset($_POST['username'])) ? Util::cleanPostText($_POST['username']) : null;
-$formPassword = (isset($_POST['password'])) ? Util::cleanPostText($_POST['password']) : null;
-$formFirstName = (isset($_POST['firstname'])) ? Util::cleanPostText($_POST['firstname']) : null;
-$formLastName = (isset($_POST['lastname'])) ? Util::cleanPostText($_POST['lastname']) : null;
-$formAddress1 = (isset($_POST['address1'])) ? Util::cleanPostText($_POST['address1']) : null;
-$formAddress2 = (isset($_POST['address2'])) ? Util::cleanPostText($_POST['address2']) : null;
-$formSuburb = (isset($_POST['suburb'])) ? Util::cleanPostText($_POST['suburb']) : null;
-$formCity = (isset($_POST['city'])) ? Util::cleanPostText($_POST['city']) : null;
-$formEmail = (isset($_POST['email'])) ? Util::cleanPostText($_POST['email']) : null;
-$formPhone = (isset($_POST['phone'])) ? Util::cleanPostText($_POST['phone']) : null;
+$formUsername = (isset($_POST['username'])) ? Util::cleanPostSql($_POST['username'], $dbConnection) : null;
+$formPassword = (isset($_POST['password'])) ? Util::cleanPostSql($_POST['password'], $dbConnection) : null;
+$formFirstName = (isset($_POST['firstname'])) ? Util::cleanPostSql($_POST['firstname'], $dbConnection) : null;
+$formLastName = (isset($_POST['lastname'])) ? Util::cleanPostSql($_POST['lastname'], $dbConnection) : null;
+$formAddress1 = (isset($_POST['address1'])) ? Util::cleanPostSql($_POST['address1'], $dbConnection) : null;
+$formAddress2 = (isset($_POST['address2'])) ? Util::cleanPostSql($_POST['address2'], $dbConnection) : null;
+$formSuburb = (isset($_POST['suburb'])) ? Util::cleanPostSql($_POST['suburb'], $dbConnection) : null;
+$formCity = (isset($_POST['city'])) ? Util::cleanPostSql($_POST['city'], $dbConnection) : null;
+$formEmail = (isset($_POST['email'])) ? Util::cleanPostSql($_POST['email'], $dbConnection) : null;
+$formPhone = (isset($_POST['phone'])) ? Util::cleanPostSql($_POST['phone'], $dbConnection) : null;
 
 //For Debugging
 //var_dump($_REQUEST);

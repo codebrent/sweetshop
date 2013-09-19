@@ -1,57 +1,40 @@
 <?php if ($registered=="success"){
 	?>
 	<div class="container">
-		<h4 class="text-info">You have been sucessfully registered</h4>
-		<p>You can <a href="index.php?s=login">Login</a> to continue shopping.</p>
+		<h4 class="text-info">Your details have been saved</h4>
+		<p>You can return to <a href="index.php?s=userview">My Details</a> or continue <a href="index.php">shopping</a>.</p>
 	</div>
 	<?php
 } elseif ($registered == "failure"){
 	?>
 	<div class="container">
-		<h4 class="text-info">We could not register your account</h4>
+		<h4 class="text-info">We could not save the information</h4>
 		<p>Something unexpected happened.</p>
-	</div>
-	<?php 
-} elseif ($registered == "userexists"){
-	?>
-	<div class="container">
-		<h4 class="text-info">We could not register your account</h4>
-		<p>Username: <?php echo $fmUsername; ?> already exists. Please <a href="index.php?s=register">register</a> with another username</p>
 	</div>
 	<?php 
 } else {
 	?>
 	<div class="container">
-		<h4 class="text-info">Register as a customer</h4>
-		<form action="" method="POST" name="registerForm" class="form-horizontal"  id="registerForm">
-			<div class="control-group">
-				<label class="control-label" for="username">Username</label>
-				<div class="controls">
-					<input name="username" id="fmUsername" type="text" placeholder="Required" class="span3" value="">
-					<div id="username-req-alert"></div>
-					<div id="username-alert"></div>
-				</div>
-			</div>
+		<h4 class="text-info">Edit your details</h4>
+		<form action="" method="POST" name="editForm" class="form-horizontal"  id="editForm">
 			<div class="control-group">
 				<label class="control-label" for="password">Password</label>
 				<div class="controls">
-					<input name="password" type="password" id="fmPassword" placeholder="Required" class="span3" value="">
-					<div id="password-req-alert"></div>
+					<input name="password" type="password" id="fmPassword" placeholder="" class="span3" value="">
 					<div id="password-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="confirmPassword">Confirm Password</label>
 				<div class="controls">
-					<input name="confirmPassword" type="password" id="fmConfirm" placeholder="Required" class="span3" value="">
-					<div id="confirm-req-alert"></div>
+					<input name="confirmPassword" type="password" id="fmConfirm" placeholder="" class="span3" value="">
 					<div id="confirm-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="email">Email</label>
 				<div class="controls">
-					<input name="email" id="fmEmail" type="text" placeholder="Required" class="span5" value="">
+					<input name="email" id="fmEmail" type="text" placeholder="Required" class="span5" value="<?php echo $user->getEmail(); ?>">
 					<div id="email-req-alert"></div>
 					<div id="email-alert"></div>
 				</div>
@@ -59,7 +42,7 @@
 			<div class="control-group">
 				<label class="control-label" for="firstname">First Name</label>
 				<div class="controls">
-					<input name="firstname" id="fmFirstName" type="text" placeholder="Required" class="span5" value="">
+					<input name="firstname" id="fmFirstName" type="text" placeholder="Required" class="span5" value="<?php echo $user->getFirstName(); ?>">
 					<div id="firstname-req-alert"></div>
 					<div id="firstname-alert"></div>
 				</div>
@@ -67,7 +50,7 @@
 			<div class="control-group">
 				<label class="control-label" for="lastname">Last Name</label>
 				<div class="controls">
-					<input name="lastname" id="fmLastName" type="text" placeholder="Required" class="span5" value="">
+					<input name="lastname" id="fmLastName" type="text" placeholder="Required" class="span5" value="<?php echo $user->getLastName(); ?>">
 					<div id="lastname-req-alert"></div>
 					<div id="lastname-alert"></div>
 				</div>
@@ -75,7 +58,7 @@
 			<div class="control-group">
 				<label class="control-label" for="address1">Address Line 1</label>
 				<div class="controls">
-					<input name="address1" id="fmAddress1" type="text" placeholder="Required" class="span5" value="">
+					<input name="address1" id="fmAddress1" type="text" placeholder="Required" class="span5" value="<?php echo $user->getAddress1(); ?>">
 					<div id="address1-req-alert"></div>
 					<div id="address1-alert"></div>
 				</div>
@@ -83,21 +66,21 @@
 			<div class="control-group">
 				<label class="control-label" for="lastname">Address Line 2</label>
 				<div class="controls">
-					<input name="address2" id="fmAddress2" type="text" placeholder="" class="span5" value="">
+					<input name="address2" id="fmAddress2" type="text" placeholder="" class="span5" value="<?php echo $user->getAddress2(); ?>">
 					<div id="address2-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="suburb">Suburb</label>
 				<div class="controls">
-					<input name="suburb" id="fmSuburb" type="text" placeholder="" class="span3" value="">
+					<input name="suburb" id="fmSuburb" type="text" placeholder="" class="span3" value="<?php echo $user->getSuburb(); ?>">
 					<div id="suburb-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="city">City</label>
 				<div class="controls">
-					<input name="city" id="fmCity" type="text" placeholder="Required" class="span3" value="">
+					<input name="city" id="fmCity" type="text" placeholder="Required" class="span3" value="<?php echo $user->getCity(); ?>">
 					<div id="city-req-alert"></div>
 					<div id="city-alert"></div>
 				</div>
@@ -105,14 +88,14 @@
 			<div class="control-group">
 				<label class="control-label" for="phone">Phone</label>
 				<div class="controls">
-					<input name="phone" id="fmPhone" type="text" placeholder="" class="span3" value="">
+					<input name="phone" id="fmPhone" type="text" placeholder="" class="span3" value="<?php echo $user->getPhone(); ?>">
 					<div id="phone-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<div class="controls">
-					<input name="submit" type="submit" class="btn btn-primary" value="Register">
-					<a href="index.php" class="btn">Cancel</a>
+					<input name="submit" type="submit" class="btn btn-primary" value="Save">
+					<a href="index.php?s=userview" class="btn">Cancel</a>
 				</div>
 			</div>
 		</form>

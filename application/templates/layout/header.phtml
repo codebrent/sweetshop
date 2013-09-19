@@ -4,9 +4,9 @@
 	</div>
 	<div class="user-info span4 text-right">
 		<?php 
-			if($userID){
-				echo "User ID: ".$userID;
-				echo '  <a href="index.php?s=logout">(Logout)</a>';
+			if($user){
+				echo "Welcome ".$user->getFirstName();
+				echo '  (<a href="index.php?s=userview">My Details</a> / <a href="index.php?s=logout">Logout</a>)';
 			} else {
 				echo "Welcome Guest ( ";
 				echo '<a href="index.php?s=login">Login</a> or ';

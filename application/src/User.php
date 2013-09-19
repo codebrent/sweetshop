@@ -21,58 +21,57 @@ class User {
 
 	
 	/**
-	 * @return bool true if saved successfully, else false;
+	 * @return string either success, failure, or userexists
 	 */
 	public function save(){
 		//check all the required fields are populated
 		if (!$this->username || !$this->passwordHash || !$this->firstName ||
 		    !$this->lastName || !$this->email || !$this->address1 || !$this->city){
-			return false;
-		}		
+			return "failure";
+		}
 		if ($this->userID){ //existing ID, update details
-			$query = "UPDATE users SET `userId`='".$this->userID."',`username`='".$this->username."',`password`='".$this->passwordHash."',`firstName`='".$this->firstName;
-			$query .= "',`lastName`='".$this->lastName."',`phone`='".$this->phone."',`email`='".$this->email."',`address1`='".$this->address1."',`address2`='".$this->address2;
-			$query .= "',`suburb`='".$this->suburb."',`city`='".$this->city."' WHERE ".$this->userID;			
+			//will save items which have been set. Otherwise values are from the database
+			$query = "UPDATE users SET `userId`='".$this->getUserID()."',`username`='".$this->getUsername()."',`password`='".$this->getPassword()."',`firstName`='".$this->getFirstName();
+			$query .= "',`lastName`='".$this->getLastName()."',`phone`='".$this->getPhone()."',`email`='".$this->getEmail()."',`address1`='".$this->getAddress1()."',`address2`='".$this->getAddress2();
+			$query .= "',`suburb`='".$this->getSuburb()."',`city`='".$this->getCity()."' WHERE ".$this->userID;			
 			
 		} else { //new user, save new row
+			//check username does not already exist
+			if ($this->getUserID()){
+				return "userexists";
+			}
+			//build query
 			$query = "INSERT INTO users(`username`, `password`, `firstName`, `lastName`, `phone`, `email`, `address1`, `address2`, `suburb`, `city`) ";
 			$query .= "VALUES ('".$this->username."','".$this->passwordHash."','".$this->firstName."','".$this->lastName."','".$this->phone."','";
 			$query .= $this->email."','".$this->address1."','".$this->address2."','".$this->suburb."','".$this->city."')";
 		}
-		return mysqli_query($this->dbConnection, $query);
-		
+		if (mysqli_query($this->dbConnection, $query)){
+			return "success";
+		} else {
+			return "failure";
+		}
 	}
 	
 	/**
 	 *
-	 * @param string $password
 	 * @return bool true is password is correct otherwise false
 	 */
-	public function logon($password){
-		$userPass = md5($password);
-		$md5 = $this->getHashedPassword();
-		return ($userPass == $md5) ? true : false;
+	public function login($password){
+		$this->getUserID(); //load userID from username
+		$pw = $this->getPassword(); //load user password
+		return ($pw == md5($password)) ? true : false;
 	}
 	
-	/**
-	 * @returns MD5 Hashed password or null if not found
-	 */
-	private function getHashedPassword(){
-		$fileName = dirname(__DIR__).DIRECTORY_SEPARATOR.$this->passwordFile;
-		$fileHandle = fopen($fileName, "r") or exit("Unable to open password file");
-		$hashedPw = null;
-		while(!feof($fileHandle)){
-			$lineParts = explode(" ",fgets($fileHandle));
-			$studentID = $lineParts[0];
-			$md5Hash = $lineParts[1];
-			if ($studentID == $this->studentID){
-				$hashedPw = preg_replace("/\s+/", '', $md5Hash); //remove all write space and new lines
-			}
+	public function getUserID(){
+		if (!$this->userID){
+			$query = "SELECT userId FROM users WHERE username='".$this->username."'";
+			$result = mysqli_query($this->dbConnection, $query);
+			$row = $result->fetch_row();
+			$this->userID = $row[0];
 		}
-		fclose($fileHandle);
-		return $hashedPw;
+		return $this->userID;
 	}
-
+	
 	public function setUsername($username){
 		$this->username = $username;
 	}
