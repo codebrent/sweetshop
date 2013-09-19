@@ -16,114 +16,100 @@
 	?>
 	<div class="container">
 		<h4 class="text-info">Register as a customer</h4>
-		<form action="index.php?s=register" method="POST" name="registerForm" class="form-horizontal"  id="registerForm">
+		<form action="" method="POST" name="registerForm" class="form-horizontal"  id="registerForm">
 			<div class="control-group">
 				<label class="control-label" for="username">Username</label>
 				<div class="controls">
-					<input name="username" type="text" placeholder="Username" class="span3" value="">
-					<div class="alert alert-error span4" id="username-alert">
-  						Please enter a user name.
-					</div>
+					<input name="username" id="fmUsername" type="text" placeholder="Required" class="span3" value="">
+					<div id="username-req-alert"></div>
+					<div id="username-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="password">Password</label>
 				<div class="controls">
-					<input name="password" type="password" placeholder="Password" class="span3" value="">
-					<div class="alert alert-error span4" id="password-alert">
-  						Please enter a password.
-					</div>
+					<input name="password" type="password" id="fmPassword" placeholder="Required" class="span3" value="">
+					<div id="password-req-alert"></div>
+					<div id="password-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="confirmPassword">Confirm Password</label>
 				<div class="controls">
-					<input name="confirmPassword" type="password" placeholder="Confirm Password" class="span3" value="">
-					<div class="alert alert-error span4" id="confirm-alert">
-  						Passwords do not match.
-					</div>
+					<input name="confirmPassword" type="password" id="fmConfirm" placeholder="Required" class="span3" value="">
+					<div id="confirm-req-alert"></div>
+					<div id="confirm-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="email">Email</label>
 				<div class="controls">
-					<input name="email" type="text" placeholder="Email" class="span5" value="">
-					<div class="alert alert-error span4" id="email-alert">
-  						Please enter an email.
-					</div>
+					<input name="email" id="fmEmail" type="text" placeholder="Required" class="span5" value="">
+					<div id="email-req-alert"></div>
+					<div id="email-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="firstname">First Name</label>
 				<div class="controls">
-					<input name="firstname" type="text" placeholder="First Name" class="span5" value="">
-					<div class="alert alert-error span4" id="firstname-alert">
-  						Please enter your First Name.
-					</div>
+					<input name="firstname" id="fmFirstName" type="text" placeholder="Required" class="span5" value="">
+					<div id="firstname-req-alert"></div>
+					<div id="firstname-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="lastname">Last Name</label>
 				<div class="controls">
-					<input name="lastname" type="text" placeholder="Last Name" class="span5" value="">
-					<div class="alert alert-error span4" id="lastname-alert">
-  						Please enter your Last Name.
-					</div>
+					<input name="lastname" id="fmLastName" type="text" placeholder="Required" class="span5" value="">
+					<div id="lastname-req-alert"></div>
+					<div id="lastname-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="address1">Address Line 1</label>
 				<div class="controls">
-					<input name="address1" type="text" placeholder="Address Line 1" class="span5" value="">
-					<div class="alert alert-error span4" id="address1-alert">
-  						Please enter the Address.
-					</div>
+					<input name="address1" id="fmAddress1" type="text" placeholder="Required" class="span5" value="">
+					<div id="address1-req-alert"></div>
+					<div id="address1-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="lastname">Address Line 2</label>
 				<div class="controls">
-					<input name="address2" type="text" placeholder="Address Line 2" class="span5" value="">
-					<div class="alert alert-error span4" id="address2-alert">
-  						Please enter the Address.
-					</div>
+					<input name="address2" id="fmAddress2" type="text" placeholder="" class="span5" value="">
+					<div id="address2-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="suburb">Suburb</label>
 				<div class="controls">
-					<input name="suburb" type="text" placeholder="Suburb" class="span3" value="">
-					<div class="alert alert-error span4" id="suburb-alert">
-  						Please enter the Suburb.
-					</div>
+					<input name="suburb" id="fmSuburb" type="text" placeholder="" class="span3" value="">
+					<div id="suburb-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="city">City</label>
 				<div class="controls">
-					<input name="city" type="text" placeholder="City" class="span3" value="">
-					<div class="alert alert-error span4" id="city-alert">
-  						Please enter the City.
-					</div>
+					<input name="city" id="fmCity" type="text" placeholder="Required" class="span3" value="">
+					<div id="city-req-alert"></div>
+					<div id="city-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="phone">Phone</label>
 				<div class="controls">
-					<input name="phone" type="text" placeholder="Phone" class="span3" value="">
-					<div class="alert alert-error span4" id="phone-alert">
-  						Please enter your phone number.
-					</div>
+					<input name="phone" id="fmPhone" type="text" placeholder="" class="span3" value="">
+					<div id="phone-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
-			<div class="controls">
-			<input name="submit" type="submit" class="btn btn-primary" value="Register">
-			<a href="index.php" class="btn">Cancel</a>
+				<div class="controls">
+					<input name="submit" type="submit" class="btn btn-primary" value="Register">
+					<a href="index.php" class="btn">Cancel</a>
+				</div>
 			</div>
-			</div>
-			</form>
-			</div>
+		</form>
+	</div>
 <?php 	
 }
 ?>
