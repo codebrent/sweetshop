@@ -5,6 +5,7 @@ include 'application/src/Database.php';
 include 'application/src/Layout.php';
 include 'application/src/Product.php';
 include 'application/src/User.php';
+include 'application/src/Util.php';
 
 $db = new Database();
 $dbConnection = $db->getDbConnection();
@@ -18,20 +19,21 @@ if(isset($_SESSION["userID"])){
 	$userID = null; //not logged in
 }
 //Get info about the selected screen
-$viewData["screen"] = filter_input(INPUT_GET,"s",FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-$viewData["page"] = filter_input(INPUT_GET,"p",FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH); 
+
+$viewData["screen"] = (isset($_GET['s'])) ? Util::cleanPostText($_GET['s']) : null;
+$viewData["page"] = (isset($_GET['p'])) ? Util::cleanPostText($_GET['p']) : null;
 
 //Get clean info for user login / registration or update of information
-$formUsername = filter_input(INPUT_POST,"username",FILTER_SANITIZE_EMAIL);
-$formPassword = filter_input(INPUT_POST,"password",FILTER_SANITIZE_EMAIL);
-$formFirstName = filter_input(INPUT_POST,"firstname",FILTER_SANITIZE_EMAIL);
-$formLastName = filter_input(INPUT_POST,"lastname",FILTER_SANITIZE_EMAIL);
-$formAddress1 = filter_input(INPUT_POST,"address1",FILTER_SANITIZE_EMAIL);
-$formAddress2 = filter_input(INPUT_POST,"address2",FILTER_SANITIZE_EMAIL);
-$formSuburb = filter_input(INPUT_POST,"suburb",FILTER_SANITIZE_EMAIL);
-$formCity = filter_input(INPUT_POST,"city",FILTER_SANITIZE_EMAIL);
-$formEmail = filter_input(INPUT_POST,"email",FILTER_SANITIZE_EMAIL);
-$formPhone = filter_input(INPUT_POST,"phone",FILTER_SANITIZE_EMAIL);
+$formUsername = (isset($_POST['username'])) ? Util::cleanPostText($_POST['username']) : null;
+$formPassword = (isset($_POST['password'])) ? Util::cleanPostText($_POST['password']) : null;
+$formFirstName = (isset($_POST['firstname'])) ? Util::cleanPostText($_POST['firstname']) : null;
+$formLastName = (isset($_POST['lastname'])) ? Util::cleanPostText($_POST['lastname']) : null;
+$formAddress1 = (isset($_POST['address1'])) ? Util::cleanPostText($_POST['address1']) : null;
+$formAddress2 = (isset($_POST['address2'])) ? Util::cleanPostText($_POST['address2']) : null;
+$formSuburb = (isset($_POST['suburb'])) ? Util::cleanPostText($_POST['suburb']) : null;
+$formCity = (isset($_POST['city'])) ? Util::cleanPostText($_POST['city']) : null;
+$formEmail = (isset($_POST['email'])) ? Util::cleanPostText($_POST['email']) : null;
+$formPhone = (isset($_POST['phone'])) ? Util::cleanPostText($_POST['phone']) : null;
 
 //For Debugging
 //var_dump($_REQUEST);

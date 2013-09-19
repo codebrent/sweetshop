@@ -28,8 +28,7 @@ if($viewData["screen"] == "logout" && $userID != null){
 		$user->setCity($formCity);
 		$user->setEmail($formEmail);
 		$user->setPhone($formPhone);
-		$result = $user->save();
-		if ($result == true){
+		if ($user->save()){
 			$viewData["registered"] = "success";
 		} else {
 			$viewData["registered"] = "failure";

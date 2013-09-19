@@ -4,8 +4,8 @@ $page = (isset($this->viewData["page"])) ? $this->viewData["page"] : null;
 $userID = (isset($this->viewData["userID"])) ? $this->viewData["userID"] : null;
 $products = (isset($this->viewData["products"])) ? $this->viewData["products"] : null; //product list for category screen
 $product = (isset($this->viewData["product"])) ? $this->viewData["product"] : null; //single product for product detail screen
-
-$registered = "";
+$registered = (isset($this->viewData["registered"])) ? $this->viewData["registered"] : null; //form flag for registeration
+ 
 
 $formStudentID = (isset($this->viewData["formStudentID"])) ? $this->viewData["formStudentID"] : null;
 $papers = (isset($this->viewData["papers"])) ? $this->viewData["papers"] : null;

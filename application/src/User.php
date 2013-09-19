@@ -29,7 +29,7 @@ class User {
 		    !$this->lastName || !$this->email || !$this->address1 || !$this->city){
 			return false;
 		}		
-		if ($userID){ //existing ID, update details
+		if ($this->userID){ //existing ID, update details
 			$query = "UPDATE users SET `userId`='".$this->userID."',`username`='".$this->username."',`password`='".$this->passwordHash."',`firstName`='".$this->firstName;
 			$query .= "',`lastName`='".$this->lastName."',`phone`='".$this->phone."',`email`='".$this->email."',`address1`='".$this->address1."',`address2`='".$this->address2;
 			$query .= "',`suburb`='".$this->suburb."',`city`='".$this->city."' WHERE ".$this->userID;			
@@ -39,6 +39,7 @@ class User {
 			$query .= "VALUES ('".$this->username."','".$this->passwordHash."','".$this->firstName."','".$this->lastName."','".$this->phone."','";
 			$query .= $this->email."','".$this->address1."','".$this->address2."','".$this->suburb."','".$this->city."')";
 		}
+		return mysqli_query($this->dbConnection, $query);
 		
 	}
 	

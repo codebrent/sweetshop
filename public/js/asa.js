@@ -2,6 +2,7 @@ $(function(){
 	$('#inputPaperNo').change(showRadios);
 	$('#fileUploadForm').hide();
 	$('#fileUploadForm').submit(uploadSubmit);
+	$('#registerForm').submit(registerSubmit);
 	//EasyLoginCode
 	//$('.easyLogin').click(function(){
     //	$buttonText = $(this).html();  
@@ -71,5 +72,10 @@ function uploadSubmit(){
 		$('#jsMessage').html('Please select an file with an extension of .txt, .php, .cpp, .c, or .html');
 		$('#jsMessage').attr('class','alert alert-error');
 	}
+	return false;
+}
+
+function registerSubmit(){
+	alert('Click1111');
 	return false;
 }

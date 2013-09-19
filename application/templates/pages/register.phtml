@@ -15,74 +15,106 @@
 } else {
 	?>
 	<div class="container">
-	<h4 class="text-info">Register as a customer</h4>
-	<form action="index.php?s=register" method="POST" name="reister"
-			class="form-horizontal" id="register">
+		<h4 class="text-info">Register as a customer</h4>
+		<form action="index.php?s=register" method="POST" name="registerForm" class="form-horizontal"  id="registerForm">
 			<div class="control-group">
-			<label class="control-label" for="username">Username</label>
-			<div class="controls">
-			<input name="username" type="text" placeholder="Username" class="span3" value="">
-			</div>
-			</div>
-			<div class="control-group">
-			<label class="control-label" for="password">Password</label>
-			<div class="controls">
-			<input name="password" type="text" placeholder="Password" class="span3" value="">
-			</div>
+				<label class="control-label" for="username">Username</label>
+				<div class="controls">
+					<input name="username" type="text" placeholder="Username" class="span3" value="">
+					<div class="alert alert-error span4" id="username-alert">
+  						Please enter a user name.
+					</div>
+				</div>
 			</div>
 			<div class="control-group">
-			<label class="control-label" for="confirmPassword">Confirm Password</label>
-			<div class="controls">
-			<input name="confirmPassword" type="text" placeholder="Confirm Password" class="span3" value="">
-			</div>
-			</div>
-			<div class="control-group">
-			<label class="control-label" for="email">Email</label>
-			<div class="controls">
-			<input name="email" type="text" placeholder="Email" class="span5" value="">
-			</div>
+				<label class="control-label" for="password">Password</label>
+				<div class="controls">
+					<input name="password" type="password" placeholder="Password" class="span3" value="">
+					<div class="alert alert-error span4" id="password-alert">
+  						Please enter a password.
+					</div>
+				</div>
 			</div>
 			<div class="control-group">
-			<label class="control-label" for="firstname">First Name</label>
-			<div class="controls">
-			<input name="firstname" type="text" placeholder="First Name" class="span5" value="">
-			</div>
-			</div>
-			<div class="control-group">
-			<label class="control-label" for="lastname">Last Name</label>
-			<div class="controls">
-			<input name="lastname" type="text" placeholder="Last Name" class="span5" value="">
-			</div>
+				<label class="control-label" for="confirmPassword">Confirm Password</label>
+				<div class="controls">
+					<input name="confirmPassword" type="password" placeholder="Confirm Password" class="span3" value="">
+					<div class="alert alert-error span4" id="confirm-alert">
+  						Passwords do not match.
+					</div>
+				</div>
 			</div>
 			<div class="control-group">
-			<label class="control-label" for="address1">Address Line 1</label>
-			<div class="controls">
-			<input name="address1" type="text" placeholder="Address Line 1" class="span5" value="">
-			</div>
-			</div>
-			<div class="control-group">
-			<label class="control-label" for="lastname">Address Line 2</label>
-			<div class="controls">
-			<input name="address2" type="text" placeholder="Address Line 2" class="span5" value="">
-			</div>
+				<label class="control-label" for="email">Email</label>
+				<div class="controls">
+					<input name="email" type="text" placeholder="Email" class="span5" value="">
+					<div class="alert alert-error span4" id="email-alert">
+  						Please enter an email.
+					</div>
+				</div>
 			</div>
 			<div class="control-group">
-			<label class="control-label" for="suburb">Suburb</label>
-			<div class="controls">
-			<input name="suburb" type="text" placeholder="Suburb" class="span3" value="">
-			</div>
-			</div>
-			<div class="control-group">
-			<label class="control-label" for="city">City</label>
-			<div class="controls">
-			<input name="city" type="text" placeholder="City" class="span3" value="">
-			</div>
+				<label class="control-label" for="firstname">First Name</label>
+				<div class="controls">
+					<input name="firstname" type="text" placeholder="First Name" class="span5" value="">
+					<div class="alert alert-error span4" id="firstname-alert">
+  						Please enter your First Name.
+					</div>
+				</div>
 			</div>
 			<div class="control-group">
-			<label class="control-label" for="phone">Phone</label>
-			<div class="controls">
-			<input name="phone" type="text" placeholder="Phone" class="span3" value="">
+				<label class="control-label" for="lastname">Last Name</label>
+				<div class="controls">
+					<input name="lastname" type="text" placeholder="Last Name" class="span5" value="">
+					<div class="alert alert-error span4" id="lastname-alert">
+  						Please enter your Last Name.
+					</div>
+				</div>
 			</div>
+			<div class="control-group">
+				<label class="control-label" for="address1">Address Line 1</label>
+				<div class="controls">
+					<input name="address1" type="text" placeholder="Address Line 1" class="span5" value="">
+					<div class="alert alert-error span4" id="address1-alert">
+  						Please enter the Address.
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="lastname">Address Line 2</label>
+				<div class="controls">
+					<input name="address2" type="text" placeholder="Address Line 2" class="span5" value="">
+					<div class="alert alert-error span4" id="address2-alert">
+  						Please enter the Address.
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="suburb">Suburb</label>
+				<div class="controls">
+					<input name="suburb" type="text" placeholder="Suburb" class="span3" value="">
+					<div class="alert alert-error span4" id="suburb-alert">
+  						Please enter the Suburb.
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="city">City</label>
+				<div class="controls">
+					<input name="city" type="text" placeholder="City" class="span3" value="">
+					<div class="alert alert-error span4" id="city-alert">
+  						Please enter the City.
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="phone">Phone</label>
+				<div class="controls">
+					<input name="phone" type="text" placeholder="Phone" class="span3" value="">
+					<div class="alert alert-error span4" id="phone-alert">
+  						Please enter your phone number.
+					</div>
+				</div>
 			</div>
 			<div class="control-group">
 			<div class="controls">
