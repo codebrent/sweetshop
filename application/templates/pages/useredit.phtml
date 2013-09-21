@@ -1,3 +1,4 @@
+<?php include "application/templates/pages/usermenu.phtml";?>
 <?php if ($registered=="success"){
 	?>
 	<div class="container">
@@ -15,8 +16,8 @@
 } else {
 	?>
 	<div class="container">
-		<h4 class="text-info">Edit your details</h4>
 		<form action="" method="POST" name="editForm" class="form-horizontal"  id="editForm">
+			<h5 class="text-info">Change your password</h5>
 			<div class="control-group">
 				<label class="control-label" for="password">Password</label>
 				<div class="controls">
@@ -31,6 +32,13 @@
 					<div id="confirm-alert"></div>
 				</div>
 			</div>
+			<div class="control-group">
+				<div class="controls">
+					<input name="submit" type="submit" class="btn btn-primary" value="Save">
+					<a href="index.php?s=userview" class="btn">Cancel</a>
+				</div>
+			</div>
+			<h5 class="text-info">Update your details</h5>
 			<div class="control-group">
 				<label class="control-label" for="email">Email</label>
 				<div class="controls">

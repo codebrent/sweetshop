@@ -1,0 +1,34 @@
+<div class="container">
+	<?php if ($page=="cart"){ 
+		//foreach($cart->getItemList() as $line){
+//			echo $line."<br>";
+	//	}
+		?>
+		<h4 class="text-info">Shopping Cart</h4>
+		<table class="table">
+			<tr>
+				<th>Item</th>
+				<th>Quantity</th>
+				<th>Price</th>
+			</tr>
+			<?php 
+			foreach ($cart->getItemList() as $orderItem){
+			?>
+			<tr>
+				<td><a href="index.php?s=product&p=<?php echo $orderItem->getProductId(); ?>">
+					<?php echo $orderItem->getProductName(); ?></a>
+				</td>
+				<td><?php echo $orderItem->getQuantity(); ?></td>
+				<td><?php echo $orderItem->getPrice(); ?></td>
+			</tr>
+			<?php 
+			}			
+			?>			
+		</table>
+
+		<?php } else { ?>
+		<h4 class="text-info">Here is a view of the historic order</h4>
+		<p>Order</p>
+<?php } ?>
+
+</div>

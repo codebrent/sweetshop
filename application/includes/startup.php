@@ -3,6 +3,8 @@
 include 'application/src/Category.php';
 include 'application/src/Database.php';
 include 'application/src/Layout.php';
+include 'application/src/Order.php';
+include 'application/src/OrderItem.php';
 include 'application/src/Product.php';
 include 'application/src/User.php';
 include 'application/src/Util.php';
@@ -17,8 +19,28 @@ if(isset($_SESSION["userID"])){
 } else {
 	$viewData["user"] = null; //not logged in
 }
-//Get info about the selected screen
 
+if(isset($_SESSION["cartID"])){
+	$viewData["cart"] = new Order($_SESSION["cartID"], $dbConnection);
+	if ($viewData["user"]){ //make sure userID is saved into cart details
+		$viewData["cart"]->setUserID($viewData["user"]->getUserID());
+		$viewData["cart"]->save();
+	}
+} else {
+	if($viewData["user"]){
+		//cartID not set but user logged in. See if it can be loaded through userID
+		$_SESSION["cartID"] = $viewData["user"]->getCart();
+		$viewData["cart"] = new Order($_SESSION["cartID"], $dbConnection);
+	} else {	
+		$viewData["cart"] = null; //no cart set
+	}
+}
+
+
+
+
+
+//Get info about the selected screen
 $viewData["screen"] = (isset($_GET['s'])) ? Util::cleanPostText($_GET['s']) : null;
 $viewData["page"] = (isset($_GET['p'])) ? Util::cleanPostText($_GET['p']) : null;
 

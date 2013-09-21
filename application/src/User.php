@@ -24,16 +24,11 @@ class User {
 	 * @return string either success, failure, or userexists
 	 */
 	public function save(){
-		//check all the required fields are populated
-		if (!$this->username || !$this->passwordHash || !$this->firstName ||
-		    !$this->lastName || !$this->email || !$this->address1 || !$this->city){
-			return "failure";
-		}
 		if ($this->userID){ //existing ID, update details
 			//will save items which have been set. Otherwise values are from the database
 			$query = "UPDATE users SET `userId`='".$this->getUserID()."',`username`='".$this->getUsername()."',`password`='".$this->getPassword()."',`firstName`='".$this->getFirstName();
 			$query .= "',`lastName`='".$this->getLastName()."',`phone`='".$this->getPhone()."',`email`='".$this->getEmail()."',`address1`='".$this->getAddress1()."',`address2`='".$this->getAddress2();
-			$query .= "',`suburb`='".$this->getSuburb()."',`city`='".$this->getCity()."' WHERE ".$this->userID;			
+			$query .= "',`suburb`='".$this->getSuburb()."',`city`='".$this->getCity()."' WHERE `userId`='".$this->userID."'";		
 			
 		} else { //new user, save new row
 			//check username does not already exist
@@ -60,6 +55,14 @@ class User {
 		$this->getUserID(); //load userID from username
 		$pw = $this->getPassword(); //load user password
 		return ($pw == md5($password)) ? true : false;
+	}
+	
+	
+	public function getCart(){
+		$query = "SELECT orderId FROM orders WHERE userId='".$this->getUserID()."' AND status='Pending'";
+		$result = mysqli_query($this->dbConnection, $query);
+		$row = $result->fetch_row();
+		return $row[0];
 	}
 	
 	public function getUserID(){

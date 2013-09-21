@@ -29,6 +29,17 @@
 		<input class="span2" id="appendedInputButtons" type="text">
 		<button class="btn" type="button">Search</button>
 	</div>
-	<a href="index.php?s=order&p=current" class="btn btn cartbox"><i class="icon-shopping-cart"></i> Cart (empty)</a>
+	<?php
+	$numItems = "empty";
+	if ($cart){
+		$num = $cart->getNumberOfItems();
+		if ($num == 1){
+			$numItems = "1 item";
+		} elseif ($num > 1){
+			$numItems = $num." items";
+		} 
+	}
+	 ?>
+	<a href="index.php?s=orderview&p=cart" class="btn btn cartbox"><i class="icon-shopping-cart"></i> Cart (<?php echo $numItems; ?>)</a>
 	</div>
 </div>

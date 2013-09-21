@@ -32,6 +32,23 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 		$viewData["products"][] = new Product($row["productId"], $dbConnection);
 	}
 
+} else if($viewData["screen"] == "orderview"){
+	if ($viewData["page"] == "cart"){
+		if (!$viewData["cart"] && $viewData["user"]){
+			//cartID not set but user logged in. See if it can be loaded through userID
+			$_SESSION["cartID"] = $viewData["user"]->getCart();
+			$viewData["cart"] = new Order($_SESSION["cartID"], $dbConnection);
+		}
+		//display shopping cart need to get details
+		
+		
+		
+		
+	} else {
+		//display order by ID
+		
+	}
+	
 } else if($viewData["screen"] == "register"){
 	$viewData["registered"] = null;
 	if ($formUsername){ //formdata has been sent. save user details
@@ -55,7 +72,7 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 } else if($viewData["screen"] == "useredit"){	
 	$viewData["registered"] = null;
 	if ($formFirstName){ //formdata has been sent. save user details
-		$user = new User($viewData["user"], $dbConnection);
+		$user = $viewData["user"];
 		if ($formPassword){
 			$user->setPassword($formPassword);
 		}
@@ -69,6 +86,8 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 		$user->setPhone($formPhone);
 		$viewData["registered"] = $user->save();
 	}
+	
+} else if($viewData["screen"] == "history"){	
 	
 } else {	//'home' or null
 	$viewData["screen"] = "home";

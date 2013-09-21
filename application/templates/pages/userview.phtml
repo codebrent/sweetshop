@@ -1,3 +1,4 @@
+<?php include "application/templates/pages/usermenu.phtml";?>
 <?php if (!$user){
 	?>
 	<div class="container">
@@ -8,7 +9,6 @@
 } else {
 	?>
 	<div class="container">
-		<h4 class="text-info">My Details</h4>
 		<dl class="dl-horizontal">
   			<dt>Username</dt>
   			<dd><?php echo $user->getUsername(); ?></dd>

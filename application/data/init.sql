@@ -11,13 +11,6 @@ CREATE TABLE IF NOT EXISTS `categories` (
   PRIMARY KEY (`categoryId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
-DROP TABLE IF EXISTS `orderstatus`;
-CREATE TABLE IF NOT EXISTS `orderstatus` (
-  `statusId` int(11) NOT NULL,
-  `description` text NOT NULL,
-  PRIMARY KEY (`statusId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `userId` int(11) NOT NULL AUTO_INCREMENT,
@@ -50,12 +43,11 @@ CREATE TABLE IF NOT EXISTS `products` (
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `orderId` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
+  `userId` int(11) DEFAULT NULL,
   `deliveryDate` date DEFAULT NULL,
-  `statusId` int(11) NOT NULL,
+  `status` enum('Pending','Ordered','Delivered','') NOT NULL,
   PRIMARY KEY (`orderId`),
-  FOREIGN KEY (`userId`) REFERENCES users(`userId`),
-  FOREIGN KEY (`statusId`) REFERENCES orderstatus(`statusId`)
+  FOREIGN KEY (`userId`) REFERENCES users(`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `orderitems`;
@@ -63,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `orderitems` (
   `orderId` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
   PRIMARY KEY (`orderId`,`productId`),
   FOREIGN KEY (`orderId`) REFERENCES orders(`orderId`),
   FOREIGN KEY (`productId`) REFERENCES products(`productId`)
@@ -74,11 +67,6 @@ INSERT INTO `categories` (`categoryId`, `name`) VALUES
 (2, 'Cakes'),
 (3, 'Muffins'),
 (4, 'Biscuits');
-
-INSERT INTO `orderstatus` (`statusId`, `description`) VALUES
-(1, 'Pending'),
-(2, 'Ordered'),
-(3, 'Complete');
 
 INSERT INTO `users` (`userId`, `username`, `password`, `firstName`, `lastName`, `phone`, `email`, `address1`, `address2`, `suburb`, `city`) VALUES
 (1, 'Andrew', 'd914e3ecf6cc481114a3f534a5faf90b', 'Andrew', 'Gilman', NULL, 'a.gilman@massey.ac.nz', 'Massey University', NULL, 'Albany', 'AUCKLAND');
@@ -93,11 +81,11 @@ INSERT INTO `products` (`productId`, `categoryId`, `name`, `description`, `weigh
 (7, 1, 'Lollies with wrappers', 'Avoid sticky hands and disappointed children. These lollies have wrappers.', 10, 600, '0.15'),
 (8, 1, 'Liquorice allsorts', 'Liquorice allsorts (also spelled licorice allsorts) consist of a variety of liquorice sold as a mixture. These confections are made of liquorice, sugar, coconut, aniseed jelly, fruit flavourings, and gelatine. They were first produced in Sheffield, England, by Geo. Bassett & Co Ltd who had taken over Wilkinsons (Pontefract cakes/mushrooms), Barratts (sherbet fountains/sweet cigarettes) and Trebor (mints) before being taken over themselves by the Cadbury''s consortium.', 100, 100, '2.50'),
 (9, 1, 'Easter Eggs', 'Easter eggs are special eggs that are often given to celebrate Easter or springtime. As such, Easter eggs are common during the season of Eastertide. The oldest tradition is to use dyed and painted chicken eggs, but a modern custom is to substitute chocolate eggs, or plastic eggs filled with confectionery such as jelly beans.\r\nEggs, in general, were a traditional symbol of fertility, and rebirth.[1] In Christianity, they symbolize the empty tomb of Jesus:[2][3][4] though an egg appears to be like the stone of a tomb, a bird hatches from it with life; similarly, the Easter egg, for Christians, is a reminder that Jesus rose from the grave, and that those who believe will also experience eternal life.[2][3]', 50, 5, '6.00'),
-(10, 4, 'Sprinkles Biscuits', 'Sprinkles are very small pieces of confectionery used as a decoration or to add texture to desserts—typically cupcakes, cookies, doughnuts, ice cream, frozen yogurt, and some puddings. The candies, which are produced in a variety of colors, are usually too small to be eaten individually.', 100, 10, '1.00'),
+(10, 4, 'Sprinkles Biscuits', 'Sprinkles are very small pieces of confectionery used as a decoration or to add texture to dessertsï¿½typically cupcakes, cookies, doughnuts, ice cream, frozen yogurt, and some puddings. The candies, which are produced in a variety of colors, are usually too small to be eaten individually.', 100, 10, '1.00'),
 (11, 1, 'Pacman Candy Set', 'Play your favourite game with candy. hours of fun.', 100, 10, '5.20'),
 (12, 1, 'Lifesavers', 'Life Savers is an American brand of ring-shaped mints and artificially fruit-flavored hard candy. The candy is known for its distinctive packaging, coming in aluminum foil rolls.\r\nIn 1912, candy manufacturer Clarence Crane of Garrettsville, Ohio,[1] invented Life Savers as a "summer candy" that could withstand heat better than chocolate. The candy''s name is derived from its similarity to the shape of lifebuoys used for saving people who have fallen from boats. The name has also inspired an urban legend that Crane invented the candy to prevent children from choking, due to his own child having choked on a hard candy.', 50, 12, '5.20'),
 (13, 2, 'Hamburger Surprise Cake', 'It looks like a hamburger but it is a cake. Surprise!!', 50, 5, '105.00'),
-(14, 2, 'Diet Cake', 'You can put on weight if the cake is smaller than a five cent piece.', 5, 2, '100.00'),
+(14, 2, 'Diet Cake', 'You can not put on weight if the cake is smaller than a five cent piece.', 5, 2, '100.00'),
 (15, 2, 'Art Cake', 'A work of art.', 1000, 2, '150.00'),
 (16, 2, 'Spiderman Cake', 'It has Spiderman on the cake.', 1500, 2, '150.00'),
 (17, 2, 'Piggy Cake', 'Warning: Contain bacon', 60, 50, '4.25'),
@@ -114,3 +102,13 @@ INSERT INTO `products` (`productId`, `categoryId`, `name`, `description`, `weigh
 (29, 4, 'Star Biscuits', 'They have a star in the middle', 150, 10, '1.20'),
 (30, 4, 'Crazy Bunnies', 'Maybe something to do with Easter?', 50, 50, '0.95');
 
+INSERT INTO `orders` (`orderId`, `userId`, `deliveryDate`, `status`) VALUES
+(1, 1, NULL, 'Pending'),
+(2, 1, '2013-09-01', 'Delivered');
+
+INSERT INTO `orderitems` (`orderId`, `productId`, `quantity`, `price`) VALUES
+(1, 3, 2, '1.00'),
+(1, 12, 5, '1.00'),
+(1, 14, 45, '2.00'),
+(2, 22, 3, '1.00'),
+(2, 27, 5, '1.00');
