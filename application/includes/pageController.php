@@ -20,6 +20,51 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 			$viewData["loginTry"] = "failure";
 		}
 	}
+
+} else if($viewData["screen"] == "ajxCartNumOfItems"){
+	$viewData["type"] = "ajax";
+
+} else if($viewData["screen"] == "ajxSearch"){
+	$viewData["type"] = "ajax";
+	$catalog = new Catalog($dbConnection);
+	$viewData["searchResult"] = $catalog->search($viewData["term"]);
+
+} else if($viewData["screen"] == "ajxSearchResult"){
+	$viewData["type"] = "ajax";
+	$catalog = new Catalog($dbConnection);
+	$productList = $catalog->search($viewData["page"]);
+	$resultArray = array();
+	foreach($productList as $productLine){
+		$resultArray[] = new Product($productLine["id"],$dbConnection);
+	}
+	$viewData["products"] = $resultArray; 
+	
+} else if($viewData["screen"] == "ajxBuyItem"){
+	$viewData["type"] = "ajax";
+	$productID = $viewData["page"];
+	if (!$viewData["cart"]){
+		$userID = (isset($_SESSION["userID"])) ? $_SESSION["userID"] : null;
+		$viewData["cart"] = new Order(null,$dbConnection);
+		$viewData["cart"]->setUserID($userID);
+		$viewData["cart"]->save();
+		$_SESSION["cartID"] = $viewData["cart"]->getOrderID();
+	}
+	$viewData["addResult"] = $viewData["cart"]->addItem($productID,$viewData["quantity"]);
+	$product = new Product($productID,$dbConnection);
+	$viewData["quantityAvailable"] = $product->getStock();
+	$viewData["product"] = $product;
+
+} else if($viewData["screen"] == "removeItem"){
+	$productID = $viewData["page"];
+	$orderID = $_SESSION["cartID"];
+	$orderItem = new OrderItem($orderID, $productID, $dbConnection);
+	$orderItem->delete();
+	header("Location: index.php?s=orderview&p=cart");  //redirect back to shopping cart
+
+} else if($viewData["screen"] == "confirmOrder"){
+	//update order to ordered - will clear cart
+	//if user not logged in option to register?
+	//reduce stock levels
 	
 } else if($viewData["screen"] == "product"){
 	$viewData["product"] = new Product($viewData["page"], $dbConnection);

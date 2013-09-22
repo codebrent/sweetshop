@@ -1,21 +1,18 @@
+<div class="container" id="mainContainer">
 <?php include "application/templates/pages/usermenu.phtml";?>
 <?php if ($registered=="success"){
 	?>
-	<div class="container">
+
 		<h4 class="text-info">Your details have been saved</h4>
 		<p>You can return to <a href="index.php?s=userview">My Details</a> or continue <a href="index.php">shopping</a>.</p>
-	</div>
 	<?php
 } elseif ($registered == "failure"){
 	?>
-	<div class="container">
 		<h4 class="text-info">We could not save the information</h4>
 		<p>Something unexpected happened.</p>
-	</div>
 	<?php 
 } else {
 	?>
-	<div class="container">
 		<form action="" method="POST" name="editForm" class="form-horizontal"  id="editForm">
 			<h5 class="text-info">Change your password</h5>
 			<div class="control-group">
@@ -107,10 +104,10 @@
 				</div>
 			</div>
 		</form>
-	</div>
 <?php 	
 }
 ?>
+</div>
 
 
 

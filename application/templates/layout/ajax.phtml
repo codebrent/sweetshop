@@ -1,0 +1,20 @@
+<?php 
+$screen = (isset($this->viewData["screen"])) ? $this->viewData["screen"] : null;
+$page = (isset($this->viewData["page"])) ? $this->viewData["page"] : null;
+//additem vars
+$quantity = (isset($this->viewData["quantity"])) ? $this->viewData["quantity"] : null;
+$addResult = (isset($this->viewData["addResult"])) ? $this->viewData["addResult"] : null;
+$quantityAvailable = (isset($this->viewData["quantityAvailable"])) ? $this->viewData["quantityAvailable"] : null;
+$product = (isset($this->viewData["product"])) ? $this->viewData["product"] : null;
+//Search vars
+$term = (isset($this->viewData["term"])) ? $this->viewData["term"] : null;
+$searchResult = (isset($this->viewData["searchResult"])) ? $this->viewData["searchResult"] : null;
+
+
+
+$user = (isset($this->viewData["user"])) ? $this->viewData["user"] : null; //user object
+$cart = (isset($this->viewData["cart"])) ? $this->viewData["cart"] : null; //cart object
+$products = (isset($this->viewData["products"])) ? $this->viewData["products"] : null; //product list for category screen
+
+?>
+<?php include "application/templates/ajax/".$screen.".phtml";?>

@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container" id="mainContainer">
+	<div id="msgContainer"></div>
 	<ul class="thumbnails">
 	<?php 
 	foreach ($products as $product){
@@ -13,12 +14,20 @@
 					<p><?php echo $product->getDescription("short"); ?></p>
 				</div>
 				<div class="caption">
-				<a href="index.php?s=product&p=<?php echo $product->getProductId(); ?>" class="btn btn-primary catButton">More</a>
+					<?php 
+						$pid = $product->getProductId();
+						$tbId = "tbBuy".$pid;
+						$bId = "bBuy".$pid;
+						$getTb = "$('#".$tbId."')";
+					?>
+					<a href="index.php?s=product&p=<?php echo $pid; ?>" class="btn-mini btn catButton">More</a>
+					<div class="input-append" id="<?php echo $tbId; ?>div">
+						<input class="input-mini text-right" id="<?php echo $tbId; ?>" type="text" value="1">
+						<button class="btn btn-primary" id="<?php echo $bId; ?>" type="button" onclick="buyMe(<?php echo $pid; ?>,<?php echo $getTb; ?>)">Buy</button>
+					</div>
 				</div>
 			</div>
 		</li>
-
-
 	<?php
 	}
 	?>

@@ -1,0 +1,47 @@
+<?php 
+$num = count($products);
+if ($num == 1){
+	$comment = "1 result";
+} else {
+	$comment = $num.' results';
+}
+
+
+?>
+
+
+
+
+<h4>Found <?php echo $comment;?> for the search term '<?php echo $page; ?>'</h4>
+	<ul class="thumbnails">
+	<?php 
+	foreach ($products as $product){
+	?>
+		<li class="span2">
+			<div class="catThumbnail thumbnail">
+				<img alt="<?php echo $product->getName(); ?>" style="width: 100px; height: 100px;" src="<?php echo $product->getImageName("small"); ?>">
+				<div class="caption catCaption">
+					<a href="index.php?s=product&p=<?php echo $product->getProductId(); ?>">
+						<h4><?php echo $product->getName(); ?></h4>
+					</a>
+					<p><?php echo $product->getDescription("short"); ?></p>
+				</div>
+				<div class="caption">
+					<?php 
+						$pid = $product->getProductId();
+						$tbId = "tbBuy".$pid;
+						$bId = "bBuy".$pid;
+						$getTb = "$('#".$tbId."')";
+					?>
+					<a href="index.php?s=product&p=<?php echo $pid; ?>" class="btn-mini btn catButton">More</a>
+					<div class="input-append" id="<?php echo $tbId; ?>div">
+						<input class="input-mini text-right" id="<?php echo $tbId; ?>" type="text" value="1">
+						<button class="btn btn-primary" id="<?php echo $bId; ?>" type="button" onclick="buyMe(<?php echo $pid; ?>,<?php echo $getTb; ?>)">Buy</button>
+					</div>
+				</div>
+			</div>
+		</li>
+	<?php
+	}
+	?>
+	</ul>

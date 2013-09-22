@@ -2,7 +2,10 @@ $(function(){
 	$('#registerForm').submit(registerSubmit);
 	$('#editForm').submit(editSubmit);
 	$('#loginForm').submit(loginSubmit);
-
+	$( "#searchBox" ).autocomplete({
+		 source:'index.php',
+	})
+	$( "#searchButton" ).click(searchClick);
 });
 
 function loginSubmit(){
@@ -27,6 +30,31 @@ function loginSubmit(){
 		return false;
 	}
 	
+}
+
+function searchClick(){
+	term = $('#searchBox').val();
+	$('#mainContainer').html('<h4>Searching....</h4>');
+	$.get( "index.php", { s: "ajxSearchResult", p: term }, function(data){
+		$('#mainContainer').html(data);
+	});	
+}
+
+function buyMe(product, tb){
+	qty = tb.val();
+	if (qty < 1 || qty > 100 || isNaN(qty)){
+		alert("Please enter a quantity between 1 and 100");
+	} else {
+		bBuy = '#bBuy' + product;
+		$(bBuy).html('<img alt="" style="width: 24px; height: 18px;" src="public/img/486.gif">');
+		$.get( "index.php", { s: "ajxBuyItem", p: product, qty: qty }, function(buydata){
+			$('#msgContainer').html(buydata);
+			$.get( "index.php", { s: "ajxCartNumOfItems" }, function(cartdata){
+				$('#cartHeader').html(cartdata);
+				$(bBuy).html('Buy');
+			});
+		});
+	}
 }
 
 function registerSubmit(){

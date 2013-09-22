@@ -26,8 +26,8 @@
 		<li <?php if($screen=="category" && $page=="4"){echo 'class="active"';}?>><a href="index.php?s=category&p=4">Biscuits</a></li>
 	</ul>
 	<div class="input-append searchbox">
-		<input class="span2" id="appendedInputButtons" type="text">
-		<button class="btn" type="button">Search</button>
+		<input class="span2" id="searchBox" type="text">
+		<button class="btn" type="button" id="searchButton">Search</button>
 	</div>
 	<?php
 	$numItems = "empty";
@@ -40,6 +40,6 @@
 		} 
 	}
 	 ?>
-	<a href="index.php?s=orderview&p=cart" class="btn btn cartbox"><i class="icon-shopping-cart"></i> Cart (<?php echo $numItems; ?>)</a>
+	<a href="index.php?s=orderview&p=cart" id="cartHeader" class="btn btn cartbox"><i class="icon-shopping-cart"></i> Cart (<?php echo $numItems; ?>)</a>
 	</div>
 </div>

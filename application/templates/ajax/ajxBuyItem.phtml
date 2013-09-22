@@ -1,0 +1,11 @@
+<?php 
+$unit = ($addResult == 1)? "unit" : "units";
+$was = ($addResult == 1)? "was" : "were";
+if ($quantity == $addResult){
+	echo '<div class="alert alert-info">'.$addResult.' '.$unit.' of '.$product->getName().' '.$was.' added to your shopping cart.</div>';
+} elseif ($addResult == 0){
+	echo '<div class="alert alert-info">0 units of '.$product->getName().' were added to your shopping cart. All of the stock of this item has already been ordered</div>';
+} else {
+	echo '<div class="alert alert-info">'.$addResult.' '.$unit.' of '.$product->getName().' '.$was.' added to your shopping cart.';
+	echo 'You requested '.$quantity.', but all of out stock of this item has already been ordered</div>';
+}

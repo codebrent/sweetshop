@@ -1,6 +1,6 @@
 <?php
 //Load all the classes
-include 'application/src/Category.php';
+include 'application/src/Catalog.php';
 include 'application/src/Database.php';
 include 'application/src/Layout.php';
 include 'application/src/Order.php';
@@ -36,13 +36,16 @@ if(isset($_SESSION["cartID"])){
 	}
 }
 
-
-
-
-
 //Get info about the selected screen
 $viewData["screen"] = (isset($_GET['s'])) ? Util::cleanPostText($_GET['s']) : null;
 $viewData["page"] = (isset($_GET['p'])) ? Util::cleanPostText($_GET['p']) : null;
+$viewData["quantity"] = (isset($_GET['qty'])) ? Util::cleanPostNumber($_GET['qty']) : null;
+
+//grab ajax search
+$viewData["term"] = (isset($_GET['term'])) ? Util::cleanPostText($_GET['term']) : null;
+if ($viewData["term"] != null){
+	$viewData["screen"] = "ajxSearch";
+}
 
 //Get clean info for user login / registration or update of information
 $formUsername = (isset($_POST['username'])) ? Util::cleanPostSql($_POST['username'], $dbConnection) : null;

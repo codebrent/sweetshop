@@ -1,0 +1,12 @@
+<?php
+	$numItems = "empty";
+	if ($cart){
+		$num = $cart->getNumberOfItems();
+		if ($num == 1){
+			$numItems = "1 item";
+		} elseif ($num > 1){
+			$numItems = $num." items";
+		} 
+	}
+?>
+<i class="icon-shopping-cart"></i> Cart (<?php echo $numItems; ?>)

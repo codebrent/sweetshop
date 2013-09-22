@@ -1,6 +1,8 @@
 <?php
 class Order {
 
+	const GST_RATE = 0.15;
+	
 	private $orderID;
 	private $userID;
 	private $deliveryDate;
@@ -22,11 +24,24 @@ class Order {
 				
 		} else { //new order, save new row
 			//check no other pending orders assigned to user name
-
-			//build query
-			$query = "INSERT INTO users(`username`, `password`, `firstName`, `lastName`, `phone`, `email`, `address1`, `address2`, `suburb`, `city`) ";
-			$query .= "VALUES ('".$this->username."','".$this->passwordHash."','".$this->firstName."','".$this->lastName."','".$this->phone."','";
-			$query .= $this->email."','".$this->address1."','".$this->address2."','".$this->suburb."','".$this->city."')";
+			if ($this->getUserID()){
+				$query = "SELECT orderId FROM orders WHERE userId='".$this->getUserID()."' AND status='Pending'";
+				$result = mysqli_query($this->dbConnection, $query);
+				if ($result){
+					$row = $result->fetch_row();
+					$this->orderID = $row[0];
+				} else {
+					//no cart already in the database. Go ahead an make another one
+					//build query
+					$query = "INSERT INTO orders (`userId`,`status`) ";
+					$query .= "VALUES ('".$this->userId."','Pending')";
+					$this->orderID = mysqli_insert_id($dbConnection);
+				}
+			} else {
+				$query = "INSERT INTO orders (`userId`,`status`) ";
+				$query .= "VALUES ('".$this->userId."','Pending')";
+				$this->orderID = mysqli_insert_id($dbConnection);
+			}
 		}
 		if (mysqli_query($this->dbConnection, $query)){
 			return "success";
@@ -36,11 +51,49 @@ class Order {
 	}
 	
 	public function getNumberOfItems(){
-		return count($this->getItemList());
+		$total = 0;
+		foreach($this->getItemList() as $lineItem){
+			$total += $lineItem->getQuantity();
+		}
+		return $total;
+	}
+	
+	public function getTotalCost(){
+		$total = 0;
+		foreach($this->getItemList() as $lineItem){
+			$total += $lineItem->getQuantity()*$lineItem->getPrice();
+		}
+		return $total;
+	}
+	
+	public function getGST(){
+		return $this->getTotalCost()/(1+self::GST_RATE)*self::GST_RATE;	
 	}
 
-	public function addItem(){
-	
+	public function addItem($productID, $quantity){
+		if ($quantity < 1){
+			return 0;
+		}
+		//create a new order item check if it already exists
+		$newOrderItem = new OrderItem($this->getOrderID(), $productID, $this->dbConnection);
+		//make sure there is enough stock 
+		$prevQuantity = $newOrderItem->getQuantity();
+		$product = new Product($productID,$this->dbConnection);
+		$quantityAvailable = $product->getStock();
+		if ($prevQuantity >= $quantityAvailable){
+			return 0;
+		}
+		$totalQuantity = $quantity + $prevQuantity;
+		if ($totalQuantity > $quantityAvailable){
+			$totalQuantity = $quantityAvailable;
+		}
+		$newOrderItem->setQuantity($totalQuantity);
+		$newOrderItem->setPrice($product->getPrice());
+		$newOrderItem->save();
+		//refresh the orderitems list
+		$this->itemList = null;
+		$qtyAdded = $totalQuantity - $prevQuantity;
+		return $qtyAdded;
 	}
 	
 	public function removeItem(){

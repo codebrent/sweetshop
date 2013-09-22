@@ -7,11 +7,12 @@ p .justify {
 }
 
 .catThumbnail {
-	height: 370px;
+	height: 405px;
 }
 
 .catButton {
 	float: right ;
+	margin: 0px 0px 10px 0px;	
 }
 
 .proButton {
@@ -35,4 +36,17 @@ p .justify {
 	clear: both;
 	float: left;
 	margin: 10px 0px 0px 0px;
+}
+
+.input-mini{
+	width: 30px;
+}
+
+.input-append{
+	float: right;
+	
+}
+
+.price {
+	text-align: right !important;	
 }

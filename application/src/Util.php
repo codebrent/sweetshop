@@ -7,8 +7,8 @@ class Util{
 	public static function cleanPostText($string){
 		$clean = trim($string);
 		$clean = substr($clean,0,60);
-		$clean = preg_replace("/[^A-Za-z0-9]/", "", $clean);
-		return $string;
+		$clean = preg_replace("/[^A-Za-z0-9 ]/", "", $clean);
+		return $clean;
 	}
 
 	/*
@@ -18,7 +18,17 @@ class Util{
 		$clean = trim($string);
 		$clean = substr($clean,0,60);
 		$clean = mysqli_real_escape_string($db, $string);
-		return $string;
+		return $clean;
+	}
+
+	/*
+	 * Trims spaces, cuts to max of 60 characters, and allows only numeric
+	*/
+	public static function cleanPostNumber($string){
+		$clean = trim($string);
+		$clean = substr($clean,0,60);
+		$clean = preg_replace("/[^0-9]/", "", $clean);
+		return $clean;
 	}
 	
 }
