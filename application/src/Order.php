@@ -21,32 +21,36 @@ class Order {
 			//will save items which have been set. Otherwise values are from the database
 			$query = "UPDATE orders SET `orderId`='".$this->getOrderID()."',`userId`='".$this->getUserID()."',`deliveryDate`='".$this->getDeliveryDate();
 			$query .= "',`status`='".$this->getStatus()."' WHERE `orderId`='".$this->getOrderID()."'";
-				
-		} else { //new order, save new row
-			//check no other pending orders assigned to user name
+			return (mysqli_query($this->dbConnection, $query)) ? $this->getOrderID() : "failure";
+		} else { //new order, save new row. Only carts are created. Other orders are updated from carts.
+			//check if there is a userID, or if a guest.
 			if ($this->getUserID()){
 				$query = "SELECT orderId FROM orders WHERE userId='".$this->getUserID()."' AND status='Pending'";
 				$result = mysqli_query($this->dbConnection, $query);
 				if ($result){
 					$row = $result->fetch_row();
 					$this->orderID = $row[0];
+					return $this->orderID;
 				} else {
 					//no cart already in the database. Go ahead an make another one
 					//build query
-					$query = "INSERT INTO orders (`userId`,`status`) ";
-					$query .= "VALUES ('".$this->userId."','Pending')";
-					$this->orderID = mysqli_insert_id($dbConnection);
+					$query = "INSERT INTO orders (`userId`,`status`) VALUES ('".$this->userId."','Pending')";
+					if (mysqli_query($this->dbConnection, $query)){
+						$this->orderID = mysqli_insert_id($this->dbConnection);
+						return $this->orderID;	
+					} else {
+						return "failure";
+					}
 				}
 			} else {
-				$query = "INSERT INTO orders (`userId`,`status`) ";
-				$query .= "VALUES ('".$this->userId."','Pending')";
-				$this->orderID = mysqli_insert_id($dbConnection);
+				$query = "INSERT INTO orders (`status`) VALUES ('Pending')";
+				if (mysqli_query($this->dbConnection, $query)){
+					$this->orderID = mysqli_insert_id($this->dbConnection);
+					return $this->orderID;	
+				} else {
+					return "failure";
+				}
 			}
-		}
-		if (mysqli_query($this->dbConnection, $query)){
-			return "success";
-		} else {
-			return "failure";
 		}
 	}
 	
@@ -96,16 +100,12 @@ class Order {
 		return $qtyAdded;
 	}
 	
-	public function removeItem(){
-	
-	}
-	
-	public function processOrder(){
-	
-	}
-	
-	public function deliverOrder(){
-	
+	public function confirmOrder(){
+		//reduce stock holding
+		
+		//change status to Ordered
+		$this->setStatus("Ordered");
+		$this->save();			
 	}
 	
 	public function getOrderID(){
@@ -134,6 +134,10 @@ class Order {
 			$this->deliveryDate = $row[0];
 		}
 		return $this->deliveryDate;
+	}
+
+	public function setStatus($status){
+		$this->status = $status;
 	}
 
 	public function getStatus(){

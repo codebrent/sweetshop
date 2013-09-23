@@ -65,6 +65,16 @@ class User {
 		return $row[0];
 	}
 	
+	public function getOrders(){
+		$orders = array();
+		$query = "SELECT orderId FROM orders WHERE userId='".$this->getUserID()."' AND (status='Ordered' OR status='Delivered');";
+		$result = mysqli_query($this->dbConnection, $query);
+		while ($row = $result->fetch_assoc()) {
+			$orders[] = new Order($row["orderId"], $this->dbConnection);
+		}
+		return $orders;
+	}
+	
 	public function getUserID(){
 		if (!$this->userID){
 			$query = "SELECT userId FROM users WHERE username='".$this->username."'";

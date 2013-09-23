@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
-  `orderId` int(11) NOT NULL,
+  `orderId` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) DEFAULT NULL,
   `deliveryDate` date DEFAULT NULL,
   `status` enum('Pending','Ordered','Delivered','') NOT NULL,

@@ -62,6 +62,10 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 	header("Location: index.php?s=orderview&p=cart");  //redirect back to shopping cart
 
 } else if($viewData["screen"] == "confirmOrder"){
+	$viewData["orderID"] = $viewData["cart"]->getorderID();
+	$viewData["cart"]->confirmOrder();
+	$_SESSION["cartID"] = null;
+	
 	//update order to ordered - will clear cart
 	//if user not logged in option to register?
 	//reduce stock levels
@@ -133,6 +137,7 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 	}
 	
 } else if($viewData["screen"] == "history"){	
+	$viewData["orders"] = $viewData["user"]->getOrders();
 	
 } else {	//'home' or null
 	$viewData["screen"] = "home";

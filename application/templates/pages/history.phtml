@@ -1,4 +1,33 @@
 <?php include "application/templates/pages/usermenu.phtml";?>
-Order History
+
+	<?php if (!$orders || count($orders) < 1){ ?>
+		<h5>No items to display</h5>	
+	<?php } else { ?>
+		<table class="table">
+			<tr>
+				<th></th>				
+				<th>Order Number</th>
+				<th>Status</th>
+				<th>Total</th>
+				<th>Delivery Date</th>
+				<th></th>
+			</tr>
+			<?php 
+			foreach ($orders as $oldOrder){
+			?>
+			<tr>
+				<td></td>
+				<td><a href="index.php?s=orderview&p=<?php echo $oldOrder->getOrderID(); ?>"><?php echo $oldOrder->getOrderID(); ?></a></td>
+				<td><?php echo $oldOrder->getStatus(); ?></td>
+				<td><?php echo '$'.number_format($oldOrder->getTotalCost(), 2); ?></td>
+				<td><?php echo ($oldOrder->getDeliveryDate() != "0000-00-00") ? $oldOrder->getDeliveryDate() : ""; ?></td>
+				<td></td>
+			</tr>
+			<?php 
+			}			
+			?>
+		</table>
+	
+	<?php } ?>
 
 

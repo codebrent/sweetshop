@@ -8,22 +8,15 @@ $product = (isset($this->viewData["product"])) ? $this->viewData["product"] : nu
 $registered = (isset($this->viewData["registered"])) ? $this->viewData["registered"] : null; //form flag for registeration
 $loginTry =  (isset($this->viewData["loginTry"])) ? $this->viewData["loginTry"] : null; //form flag for login
 $fmUsername = (isset($this->viewData["fmUsername"])) ? $this->viewData["fmUsername"] : null; //username provided in login
-
-$formStudentID = (isset($this->viewData["formStudentID"])) ? $this->viewData["formStudentID"] : null;
-$papers = (isset($this->viewData["papers"])) ? $this->viewData["papers"] : null;
-$errorMessage = (isset($this->viewData["error"])) ? $this->viewData["error"] : null;
-$successMessage = (isset($this->viewData["success"])) ? $this->viewData["success"] : null;
-$uploadError = (isset($this->viewData['uploadError'])) ? $this->viewData['uploadError'] : null;
-$uploadFileName = (isset($this->viewData['uploadFileName'])) ? $this->viewData['uploadFileName'] : null;
-$stats = (isset($this->viewData['stats'])) ? $this->viewData['stats'] : null;
-
+$orderID = (isset($this->viewData["orderID"])) ? $this->viewData["orderID"] : null; //orderID of confirmed Order
+$orders = (isset($this->viewData["orders"])) ? $this->viewData["orders"] : null; //list of orders for order history
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
 	<head>
     	<meta charset="UTF-8">
-	    <title>Assignment Submission Application - Brent Dykgraaf - ID 00037354</title>
-	    <meta name="description" content="The Assignment Submission Application allows submission of assignments.">
+	    <title>Sweets Emporium - Brent Dykgraaf - ID 00037354</title>
+	    <meta name="description" content="Sweets Emporium.">
 	    <link href="public/css/bootstrap.min.css" rel="stylesheet" media="screen" type="text/css">
 	    <link href="public/css/custom.css" media="screen" rel="stylesheet" type="text/css">
 	    <link href="public/css/jquery-ui-1.10.3.custom.min.css" media="screen" rel="stylesheet" type="text/css">
@@ -37,18 +30,6 @@ $stats = (isset($this->viewData['stats'])) ? $this->viewData['stats'] : null;
 		    <!-- Header -->
 			<?php include "application/templates/layout/header.phtml";?>
 		    <!-- Main content -->
-	    	<div id="jsMessage">
-		  	</div>
-		    <?php if($successMessage){ ?>
-				<div id="goodMessage" class="alert alert-success">
-					<?php echo $successMessage; ?>
-				</div>
-		    <?php } ?>
-		    <?php if($errorMessage){ ?>
-				<div id="badMessage" class="alert alert-error">
-					<?php echo $errorMessage; ?>
-				</div>
-		    <?php } ?>
 		    <?php include "application/templates/pages/".$screen.".phtml";?>
 		    <!-- Footer -->
 			<?php include "application/templates/layout/footer.phtml";?>
