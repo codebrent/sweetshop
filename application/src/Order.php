@@ -19,13 +19,16 @@ class Order {
 	public function save(){
 		if ($this->orderID){ //existing ID, update details
 			//will save items which have been set. Otherwise values are from the database
-			$query = "UPDATE orders SET `orderId`='".$this->getOrderID()."',`userId`='".$this->getUserID()."',`deliveryDate`='".$this->getDeliveryDate();
-			$query .= "',`status`='".$this->getStatus()."' WHERE `orderId`='".$this->getOrderID()."'";
+			$query = "UPDATE orders SET `orderId`='".mysqli_real_escape_string($this->dbConnection, $this->getOrderID());
+			$query .= "',`userId`='".mysqli_real_escape_string($this->dbConnection, $this->getUserID());
+			$query .= "',`deliveryDate`='".mysqli_real_escape_string($this->dbConnection, $this->getDeliveryDate());
+			$query .= "',`status`='".mysqli_real_escape_string($this->dbConnection, $this->getStatus());
+			$query .= "' WHERE `orderId`='".mysqli_real_escape_string($this->dbConnection, $this->getOrderID())."'";
 			return (mysqli_query($this->dbConnection, $query)) ? $this->getOrderID() : "failure";
 		} else { //new order, save new row. Only carts are created. Other orders are updated from carts.
 			//check if there is a userID, or if a guest.
 			if ($this->getUserID()){
-				$query = "SELECT orderId FROM orders WHERE userId='".$this->getUserID()."' AND status='Pending'";
+				$query = "SELECT orderId FROM orders WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->getUserID())."' AND status='Pending'";
 				$result = mysqli_query($this->dbConnection, $query);
 				if ($result){
 					$row = $result->fetch_row();
@@ -34,7 +37,7 @@ class Order {
 				} else {
 					//no cart already in the database. Go ahead an make another one
 					//build query
-					$query = "INSERT INTO orders (`userId`,`status`) VALUES ('".$this->userId."','Pending')";
+					$query = "INSERT INTO orders (`userId`,`status`) VALUES ('".mysqli_real_escape_string($this->dbConnection, $this->userId)."','Pending')";
 					if (mysqli_query($this->dbConnection, $query)){
 						$this->orderID = mysqli_insert_id($this->dbConnection);
 						return $this->orderID;	
@@ -44,6 +47,7 @@ class Order {
 				}
 			} else {
 				$query = "INSERT INTO orders (`status`) VALUES ('Pending')";
+				$query = mysqli_real_escape_string($this->dbConnection, $query);
 				if (mysqli_query($this->dbConnection, $query)){
 					$this->orderID = mysqli_insert_id($this->dbConnection);
 					return $this->orderID;	
@@ -102,7 +106,10 @@ class Order {
 	
 	public function confirmOrder(){
 		//reduce stock holding
-		
+		foreach($this->getItemList() as $line){
+			$product = new Product($line->getProductId(),$this->dbConnection);
+			$product->removeStock($line->getQuantity());
+		}
 		//change status to Ordered
 		$this->setStatus("Ordered");
 		$this->save();			
@@ -114,7 +121,7 @@ class Order {
 	
 	public function getUserID(){
 		if (!$this->userID){
-			$query = "SELECT userId FROM orders WHERE orderId='".$this->orderID."'";
+			$query = "SELECT userId FROM orders WHERE orderId='".mysqli_real_escape_string($this->dbConnection, $this->orderID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->userID = $row[0];
@@ -128,7 +135,7 @@ class Order {
 	
 	public function getDeliveryDate(){
 		if (!$this->deliveryDate){
-			$query = "SELECT deliveryDate FROM orders WHERE orderId='".$this->orderID."'";
+			$query = "SELECT deliveryDate FROM orders WHERE orderId='".mysqli_real_escape_string($this->dbConnection, $this->orderID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->deliveryDate = $row[0];
@@ -142,7 +149,7 @@ class Order {
 
 	public function getStatus(){
 		if (!$this->status){
-			$query = "SELECT status FROM orders WHERE orderId='".$this->orderID."'";
+			$query = "SELECT status FROM orders WHERE orderId='".mysqli_real_escape_string($this->dbConnection, $this->orderID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->status = $row[0];
@@ -153,7 +160,7 @@ class Order {
 	public function getItemList(){
 		if (!$this->itemList){
 			$list = array();
-			$query = "SELECT * FROM orderitems WHERE orderId='".$this->orderID."'";
+			$query = "SELECT * FROM orderitems WHERE orderId='".mysqli_real_escape_string($this->dbConnection, $this->orderID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			while ($row = $result->fetch_assoc()) {
 				$list[] = new OrderItem($row["orderId"], $row["productId"], $this->dbConnection);

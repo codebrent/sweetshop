@@ -19,6 +19,7 @@
 				<th></th>
 				<th>Item</th>
 				<th>Quantity</th>
+				<th>Unit Price</th>
 				<th class="price">Price</th>
 				<th></th>
 			</tr>
@@ -30,8 +31,13 @@
 				<td><a href="index.php?s=product&p=<?php echo $orderItem->getProductId(); ?>"><?php echo $orderItem->getProductName(); ?></a>
 				<a href="index.php?s=removeItem&p=<?php echo $orderItem->getProductId(); ?>" class="btn-mini btn-primary">remove</a>
 				</td>
-				<td><?php echo $orderItem->getQuantity(); ?></td>
-				<td class="price"><?php echo '$'.number_format($orderItem->getPrice(), 2); ?></td>
+				<?php 
+				$qty = $orderItem->getQuantity();
+				$prc = $orderItem->getPrice();
+				?>
+				<td><?php echo $qty; ?></td>
+				<td><?php echo '$'.number_format($prc, 2); ?></td>
+				<td class="price"><?php echo '$'.number_format($qty*$prc, 2); ?></td>
 				<td></td>
 			</tr>
 			<?php 
@@ -39,13 +45,13 @@
 			?>
 			<tr>
 				<td></td>
-				<td colspan="2" ><b>Total</b></td>
+				<td colspan="3" ><b>Total</b></td>
 				<td class="price"><?php echo '<b>$'.number_format($order->getTotalCost(), 2).'</b>'; ?></td>
 				<td></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td colspan="2"><i>includes GST of</i></td>
+				<td colspan="3"><i>includes GST of</i></td>
 				<td class="price"><?php echo '$'.number_format($order->getGST(), 2); ?></td>
 				<td></td>
 			</tr>			

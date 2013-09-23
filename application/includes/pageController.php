@@ -66,10 +66,6 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 	$viewData["cart"]->confirmOrder();
 	$_SESSION["cartID"] = null;
 	
-	//update order to ordered - will clear cart
-	//if user not logged in option to register?
-	//reduce stock levels
-	
 } else if($viewData["screen"] == "product"){
 	$viewData["product"] = new Product($viewData["page"], $dbConnection);
 	
@@ -88,14 +84,8 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 			$_SESSION["cartID"] = $viewData["user"]->getCart();
 			$viewData["cart"] = new Order($_SESSION["cartID"], $dbConnection);
 		}
-		//display shopping cart need to get details
-		
-		
-		
-		
 	} else {
-		//display order by ID
-		
+		$viewData["order"] = new Order($viewData["page"], $dbConnection);
 	}
 	
 } else if($viewData["screen"] == "register"){

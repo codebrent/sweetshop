@@ -12,6 +12,7 @@ class Catalog {
 	 * @param string $searchString
 	 */
 	public function search($searchString){
+		$searchString = mysqli_real_escape_string($this->dbConnection, $searchString);
 		$query = "SELECT * FROM products WHERE name LIKE '%".$searchString."%' ORDER BY name ASC;";
 		$result = mysqli_query($this->dbConnection, $query);
 		$returnSet = array();

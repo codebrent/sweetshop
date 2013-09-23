@@ -29,10 +29,21 @@ if(isset($_SESSION["cartID"])){
 } else {
 	if($viewData["user"]){
 		//cartID not set but user logged in. See if it can be loaded through userID
-		$_SESSION["cartID"] = $viewData["user"]->getCart();
-		$viewData["cart"] = new Order($_SESSION["cartID"], $dbConnection);
+		if ($viewData["user"]->getCart()){
+			$_SESSION["cartID"] = $viewData["user"]->getCart();
+			$viewData["cart"] = new Order($_SESSION["cartID"], $dbConnection);
+		} else {
+			//create empty cart
+			$viewData["cart"] = new Order(null, $dbConnection);
+			$viewData["cart"]->setUserID($viewData["user"]->getUserID());
+			$viewData["cart"]->save();
+			$_SESSION["cartID"] = $viewData["cart"]->getOrderID();
+		}
 	} else {	
-		$viewData["cart"] = null; //no cart set
+		//create empty cart
+		$viewData["cart"] = new Order(null, $dbConnection);
+		$viewData["cart"]->save();
+		$_SESSION["cartID"] = $viewData["cart"]->getOrderID();
 	}
 }
 
@@ -60,4 +71,4 @@ $formEmail = (isset($_POST['email'])) ? Util::cleanPostSql($_POST['email'], $dbC
 $formPhone = (isset($_POST['phone'])) ? Util::cleanPostSql($_POST['phone'], $dbConnection) : null;
 
 //For Debugging
-//var_dump($_REQUEST);
+var_dump($_SESSION);

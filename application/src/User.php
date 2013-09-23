@@ -26,9 +26,18 @@ class User {
 	public function save(){
 		if ($this->userID){ //existing ID, update details
 			//will save items which have been set. Otherwise values are from the database
-			$query = "UPDATE users SET `userId`='".$this->getUserID()."',`username`='".$this->getUsername()."',`password`='".$this->getPassword()."',`firstName`='".$this->getFirstName();
-			$query .= "',`lastName`='".$this->getLastName()."',`phone`='".$this->getPhone()."',`email`='".$this->getEmail()."',`address1`='".$this->getAddress1()."',`address2`='".$this->getAddress2();
-			$query .= "',`suburb`='".$this->getSuburb()."',`city`='".$this->getCity()."' WHERE `userId`='".$this->userID."'";		
+			$query = "UPDATE users SET `userId`='".mysqli_real_escape_string($this->dbConnection, $this->getUserID());
+			$query .= "',`username`='".mysqli_real_escape_string($this->dbConnection, $this->getUsername());
+			$query .= "',`password`='".mysqli_real_escape_string($this->dbConnection, $this->getPassword());
+			$query .= "',`firstName`='".mysqli_real_escape_string($this->dbConnection, $this->getFirstName());
+			$query .= "',`lastName`='".mysqli_real_escape_string($this->dbConnection, $this->getLastName());
+			$query .= "',`phone`='".mysqli_real_escape_string($this->dbConnection, $this->getPhone());
+			$query .= "',`email`='".mysqli_real_escape_string($this->dbConnection, $this->getEmail());
+			$query .= "',`address1`='".mysqli_real_escape_string($this->dbConnection, $this->getAddress1());
+			$query .= "',`address2`='".mysqli_real_escape_string($this->dbConnection, $this->getAddress2());
+			$query .= "',`suburb`='".mysqli_real_escape_string($this->dbConnection, $this->getSuburb());
+			$query .= "',`city`='".mysqli_real_escape_string($this->dbConnection, $this->getCity());
+			$query .= "' WHERE `userId`='".mysqli_real_escape_string($this->dbConnection, $this->userID)."'";		
 			
 		} else { //new user, save new row
 			//check username does not already exist
@@ -37,8 +46,16 @@ class User {
 			}
 			//build query
 			$query = "INSERT INTO users(`username`, `password`, `firstName`, `lastName`, `phone`, `email`, `address1`, `address2`, `suburb`, `city`) ";
-			$query .= "VALUES ('".$this->username."','".$this->passwordHash."','".$this->firstName."','".$this->lastName."','".$this->phone."','";
-			$query .= $this->email."','".$this->address1."','".$this->address2."','".$this->suburb."','".$this->city."')";
+			$query .= "VALUES ('".mysqli_real_escape_string($this->dbConnection, $this->username);
+			$query .= "','".mysqli_real_escape_string($this->dbConnection, $this->passwordHash);
+			$query .= "','".mysqli_real_escape_string($this->dbConnection, $this->firstName);
+			$query .= "','".mysqli_real_escape_string($this->dbConnection, $this->lastName);
+			$query .= "','".mysqli_real_escape_string($this->dbConnection, $this->phone);
+			$query .= "','".mysqli_real_escape_string($this->dbConnection, $this->email);
+			$query .= "','".mysqli_real_escape_string($this->dbConnection, $this->address1);
+			$query .= "','".mysqli_real_escape_string($this->dbConnection, $this->address2);
+			$query .= "','".mysqli_real_escape_string($this->dbConnection, $this->suburb);
+			$query .= "','".mysqli_real_escape_string($this->dbConnection, $this->city)."')";
 		}
 		if (mysqli_query($this->dbConnection, $query)){
 			return "success";
@@ -59,7 +76,7 @@ class User {
 	
 	
 	public function getCart(){
-		$query = "SELECT orderId FROM orders WHERE userId='".$this->getUserID()."' AND status='Pending'";
+		$query = "SELECT orderId FROM orders WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->getUserID())."' AND status='Pending'";
 		$result = mysqli_query($this->dbConnection, $query);
 		$row = $result->fetch_row();
 		return $row[0];
@@ -67,7 +84,7 @@ class User {
 	
 	public function getOrders(){
 		$orders = array();
-		$query = "SELECT orderId FROM orders WHERE userId='".$this->getUserID()."' AND (status='Ordered' OR status='Delivered');";
+		$query = "SELECT orderId FROM orders WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->getUserID())."' AND (status='Ordered' OR status='Delivered');";
 		$result = mysqli_query($this->dbConnection, $query);
 		while ($row = $result->fetch_assoc()) {
 			$orders[] = new Order($row["orderId"], $this->dbConnection);
@@ -77,7 +94,7 @@ class User {
 	
 	public function getUserID(){
 		if (!$this->userID){
-			$query = "SELECT userId FROM users WHERE username='".$this->username."'";
+			$query = "SELECT userId FROM users WHERE username='".mysqli_real_escape_string($this->dbConnection, $this->username)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->userID = $row[0];
@@ -91,7 +108,7 @@ class User {
 
 	public function getUsername(){
 		if (!$this->username){
-			$query = "SELECT username FROM users WHERE userId='".$this->userID."'";
+			$query = "SELECT username FROM users WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->userID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->username = $row[0];
@@ -105,7 +122,7 @@ class User {
 
 	public function getPassword(){
 		if (!$this->passwordHash){
-			$query = "SELECT password FROM users WHERE userId='".$this->userID."'";
+			$query = "SELECT password FROM users WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->userID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->passwordHash = $row[0];
@@ -119,7 +136,7 @@ class User {
 
 	public function getFirstName(){
 		if (!$this->firstName){
-			$query = "SELECT firstName FROM users WHERE userId='".$this->userID."'";
+			$query = "SELECT firstName FROM users WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->userID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->firstName = $row[0];
@@ -133,7 +150,7 @@ class User {
 
 	public function getLastName(){
 		if (!$this->lastName){
-			$query = "SELECT lastName FROM users WHERE userId='".$this->userID."'";
+			$query = "SELECT lastName FROM users WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->userID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->lastName = $row[0];
@@ -147,7 +164,7 @@ class User {
 
 	public function getAddress1(){
 		if (!$this->address1){
-			$query = "SELECT address1 FROM users WHERE userId='".$this->userID."'";
+			$query = "SELECT address1 FROM users WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->userID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->address1 = $row[0];
@@ -161,7 +178,7 @@ class User {
 
 	public function getAddress2(){
 		if (!$this->address2){
-			$query = "SELECT address2 FROM users WHERE userId='".$this->userID."'";
+			$query = "SELECT address2 FROM users WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->userID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->address2 = $row[0];
@@ -175,7 +192,7 @@ class User {
 
 	public function getSuburb(){
 		if (!$this->suburb){
-			$query = "SELECT suburb FROM users WHERE userId='".$this->userID."'";
+			$query = "SELECT suburb FROM users WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->userID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->suburb = $row[0];
@@ -189,7 +206,7 @@ class User {
 	
 	public function getCity(){
 		if (!$this->city){
-			$query = "SELECT city FROM users WHERE userId='".$this->userID."'";
+			$query = "SELECT city FROM users WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->userID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->city = $row[0];
@@ -203,7 +220,7 @@ class User {
 
 	public function getEmail(){
 		if (!$this->email){
-			$query = "SELECT email FROM users WHERE userId='".$this->userID."'";
+			$query = "SELECT email FROM users WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->userID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->email = $row[0];
@@ -217,7 +234,7 @@ class User {
 
 	public function getPhone(){
 		if (!$this->phone){
-			$query = "SELECT phone FROM users WHERE userId='".$this->userID."'";
+			$query = "SELECT phone FROM users WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->userID)."'";
 			$result = mysqli_query($this->dbConnection, $query);
 			$row = $result->fetch_row();
 			$this->phone = $row[0];
