@@ -9,6 +9,7 @@ include 'application/src/Product.php';
 include 'application/src/User.php';
 include 'application/src/Util.php';
 
+//Create Database connection
 $db = new Database();
 $dbConnection = $db->getDbConnection();
 
@@ -19,8 +20,8 @@ if(isset($_SESSION["userID"])){
 } else {
 	$viewData["user"] = null; //not logged in
 }
-
 if(isset($_SESSION["cartID"])){
+	//create a new cart object from the ID saved in the session
 	$viewData["cart"] = new Order($_SESSION["cartID"], $dbConnection);
 	if ($viewData["user"]){ //make sure userID is saved into cart details
 		$viewData["cart"]->setUserID($viewData["user"]->getUserID());
@@ -39,11 +40,8 @@ if(isset($_SESSION["cartID"])){
 			$viewData["cart"]->save();
 			$_SESSION["cartID"] = $viewData["cart"]->getOrderID();
 		}
-	} else {	
-		//create empty cart
-		$viewData["cart"] = new Order(null, $dbConnection);
-		$viewData["cart"]->save();
-		$_SESSION["cartID"] = $viewData["cart"]->getOrderID();
+	} else {
+		$viewData["cart"] = null;
 	}
 }
 
@@ -71,4 +69,4 @@ $formEmail = (isset($_POST['email'])) ? Util::cleanPostSql($_POST['email'], $dbC
 $formPhone = (isset($_POST['phone'])) ? Util::cleanPostSql($_POST['phone'], $dbConnection) : null;
 
 //For Debugging
-var_dump($_SESSION);
+//var_dump($_SESSION);

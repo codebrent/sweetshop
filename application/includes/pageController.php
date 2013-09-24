@@ -1,4 +1,7 @@
 <?php
+//a screen to display is set by the $viewData["screen"] value.
+//pageController does any processing required before the layout displays the screen 
+// This is passed to the application by the parameter "s"
 if($viewData["screen"] == "logout" && $viewData["user"] != null){
 	session_destroy();
 	header("Location: index.php");  //redirect to index.php
@@ -21,14 +24,17 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 		}
 	}
 
+//update item count for cart button
 } else if($viewData["screen"] == "ajxCartNumOfItems"){
 	$viewData["type"] = "ajax";
 
+//Ajax search screen
 } else if($viewData["screen"] == "ajxSearch"){
 	$viewData["type"] = "ajax";
 	$catalog = new Catalog($dbConnection);
 	$viewData["searchResult"] = $catalog->search($viewData["term"]);
 
+//Ajax search result screen
 } else if($viewData["screen"] == "ajxSearchResult"){
 	$viewData["type"] = "ajax";
 	$catalog = new Catalog($dbConnection);
@@ -38,7 +44,8 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 		$resultArray[] = new Product($productLine["id"],$dbConnection);
 	}
 	$viewData["products"] = $resultArray; 
-	
+
+//process buy button	
 } else if($viewData["screen"] == "ajxBuyItem"){
 	$viewData["type"] = "ajax";
 	$productID = $viewData["page"];
@@ -54,6 +61,7 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 	$viewData["quantityAvailable"] = $product->getStock();
 	$viewData["product"] = $product;
 
+//Remove item from cart
 } else if($viewData["screen"] == "removeItem"){
 	$productID = $viewData["page"];
 	$orderID = $_SESSION["cartID"];
@@ -61,14 +69,17 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 	$orderItem->delete();
 	header("Location: index.php?s=orderview&p=cart");  //redirect back to shopping cart
 
+//confirm order
 } else if($viewData["screen"] == "confirmOrder"){
 	$viewData["orderID"] = $viewData["cart"]->getorderID();
 	$viewData["cart"]->confirmOrder();
 	$_SESSION["cartID"] = null;
-	
+
+//Single product page	
 } else if($viewData["screen"] == "product"){
 	$viewData["product"] = new Product($viewData["page"], $dbConnection);
-	
+
+//Category page to display multiple products	
 } else if($viewData["screen"] == "category"){
 	$query = "SELECT * FROM products WHERE categoryId='".$viewData['page']."'";
 	$result = mysqli_query($dbConnection, $query);
@@ -77,6 +88,7 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 		$viewData["products"][] = new Product($row["productId"], $dbConnection);
 	}
 
+//view cart or historic orders
 } else if($viewData["screen"] == "orderview"){
 	if ($viewData["page"] == "cart"){
 		if (!$viewData["cart"] && $viewData["user"]){
@@ -87,7 +99,8 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 	} else {
 		$viewData["order"] = new Order($viewData["page"], $dbConnection);
 	}
-	
+
+//Registration screen	
 } else if($viewData["screen"] == "register"){
 	$viewData["registered"] = null;
 	if ($formUsername){ //formdata has been sent. save user details
@@ -106,8 +119,10 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 		$viewData["fmUsername"] = $formUsername;
 	}
 
+//View user details
 } else if($viewData["screen"] == "userview"){
-	
+
+//Edit user details	
 } else if($viewData["screen"] == "useredit"){	
 	$viewData["registered"] = null;
 	if ($formFirstName){ //formdata has been sent. save user details
@@ -125,7 +140,8 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 		$user->setPhone($formPhone);
 		$viewData["registered"] = $user->save();
 	}
-	
+
+//show order history	
 } else if($viewData["screen"] == "history"){	
 	$viewData["orders"] = $viewData["user"]->getOrders();
 	

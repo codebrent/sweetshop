@@ -60,7 +60,7 @@ class OrderItem {
 	}
 	
 	public function getQuantity(){
-		if (!$this->quantity){
+		if ($this->quantity === null){
 			$query = "SELECT quantity FROM orderitems WHERE orderId='".mysqli_real_escape_string($this->dbConnection, $this->orderID);
 			$query .= "' AND productId='".mysqli_real_escape_string($this->dbConnection, $this->productID)."'";
 			$result = mysqli_query($this->dbConnection, $query);

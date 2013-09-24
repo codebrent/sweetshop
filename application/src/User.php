@@ -84,7 +84,7 @@ class User {
 	
 	public function getOrders(){
 		$orders = array();
-		$query = "SELECT orderId FROM orders WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->getUserID())."' AND (status='Ordered' OR status='Delivered');";
+		$query = "SELECT orderId FROM orders WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->getUserID())."' AND (status='Ordered' OR status='Delivered') ORDER BY orderId DESC;";
 		$result = mysqli_query($this->dbConnection, $query);
 		while ($row = $result->fetch_assoc()) {
 			$orders[] = new Order($row["orderId"], $this->dbConnection);

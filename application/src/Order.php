@@ -30,14 +30,14 @@ class Order {
 			if ($this->getUserID()){
 				$query = "SELECT orderId FROM orders WHERE userId='".mysqli_real_escape_string($this->dbConnection, $this->getUserID())."' AND status='Pending'";
 				$result = mysqli_query($this->dbConnection, $query);
-				if ($result){
+				if ($result->num_rows > 0){
 					$row = $result->fetch_row();
 					$this->orderID = $row[0];
 					return $this->orderID;
 				} else {
 					//no cart already in the database. Go ahead an make another one
 					//build query
-					$query = "INSERT INTO orders (`userId`,`status`) VALUES ('".mysqli_real_escape_string($this->dbConnection, $this->userId)."','Pending')";
+					$query = "INSERT INTO orders (`userId`,`status`) VALUES ('".mysqli_real_escape_string($this->dbConnection, $this->userID)."','Pending')";
 					if (mysqli_query($this->dbConnection, $query)){
 						$this->orderID = mysqli_insert_id($this->dbConnection);
 						return $this->orderID;	
@@ -47,7 +47,6 @@ class Order {
 				}
 			} else {
 				$query = "INSERT INTO orders (`status`) VALUES ('Pending')";
-				$query = mysqli_real_escape_string($this->dbConnection, $query);
 				if (mysqli_query($this->dbConnection, $query)){
 					$this->orderID = mysqli_insert_id($this->dbConnection);
 					return $this->orderID;	
@@ -108,7 +107,7 @@ class Order {
 		//reduce stock holding
 		foreach($this->getItemList() as $line){
 			$product = new Product($line->getProductId(),$this->dbConnection);
-			$product->removeStock($line->getQuantity());
+			echo $product->removeStock($line->getQuantity());
 		}
 		//change status to Ordered
 		$this->setStatus("Ordered");

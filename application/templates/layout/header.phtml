@@ -1,12 +1,12 @@
 <div class="row">
-	<div class="header-title span8">
+	<div class="header-title span7">
 		<h1>Sweets Emporium</h1>
 	</div>
-	<div class="user-info span4 text-right">
+	<div class="user-info span5 text-right">
 		<?php 
 			if($user){
 				echo "Welcome ".$user->getFirstName();
-				echo '  (<a href="index.php?s=userview">My Details</a> / <a href="index.php?s=logout">Logout</a>)';
+				echo '  (<a href="index.php?s=userview">My Details</a> / <a href="index.php?s=orderview&p=cart">My Cart</a> / <a href="index.php?s=logout">Logout</a>)';
 			} else {
 				echo "Welcome Guest ( ";
 				echo '<a href="index.php?s=login">Login</a> or ';
