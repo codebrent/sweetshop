@@ -20,7 +20,6 @@ class Product {
 		if ($this->productId){ //existing ID, update just stock
 			$query = "UPDATE products SET `stock`='".mysqli_real_escape_string($this->dbConnection, $this->getStock());
 			$query .= "' WHERE `productId`='".mysqli_real_escape_string($this->dbConnection, $this->productId)."'";
-			echo $query."<br>";
 			return (mysqli_query($this->dbConnection, $query)) ? "success" : "failure";
 		} else { 
 			//add new product. TODO
@@ -28,14 +27,10 @@ class Product {
 	}
 	
 	public function removeStock($quantity){
-		echo "Time to change stock level<br>";
 		if ($this->getStock() > $quantity){
-			echo "getStock is ".$this->getStock()."<br>";
-			echo "quantity is ".$quantity."<br>";
 			$this->setStock($this->getStock() - $quantity);
 		} else {
 			$this->setStock(0);
-			echo "set stock to 0<br>";
 		}
 		return ($this->save() == "success") ? $this->getStock() : -1;
 	}

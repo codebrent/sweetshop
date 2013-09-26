@@ -107,7 +107,7 @@ class Order {
 		//reduce stock holding
 		foreach($this->getItemList() as $line){
 			$product = new Product($line->getProductId(),$this->dbConnection);
-			echo $product->removeStock($line->getQuantity());
+			$product->removeStock($line->getQuantity());
 		}
 		//change status to Ordered
 		$this->setStatus("Ordered");
