@@ -73,6 +73,7 @@ if($viewData["screen"] == "logout" && $viewData["user"] != null){
 } else if($viewData["screen"] == "confirmOrder"){
 	$viewData["orderID"] = $viewData["cart"]->getorderID();
 	$viewData["cart"]->confirmOrder();
+	$viewData["cart"] = null;
 	$_SESSION["cartID"] = null;
 
 //Single product page	
