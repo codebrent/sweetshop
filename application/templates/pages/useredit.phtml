@@ -13,17 +13,17 @@
 	<?php 
 } else {
 	?>
-		<form action="" method="POST" name="editForm" class="form-horizontal"  id="editForm">
+		<form action="index.php?s=useredit" method="POST" name="editForm" class="form-horizontal"  id="editForm">
 			<h5 class="text-info">Change your password</h5>
 			<div class="control-group">
-				<label class="control-label" for="password">Password</label>
+				<label class="control-label">Password</label>
 				<div class="controls">
 					<input name="password" type="password" id="fmPassword" placeholder="" class="span3" value="">
 					<div id="password-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="confirmPassword">Confirm Password</label>
+				<label class="control-label">Confirm Password</label>
 				<div class="controls">
 					<input name="confirmPassword" type="password" id="fmConfirm" placeholder="" class="span3" value="">
 					<div id="confirm-alert"></div>
@@ -37,7 +37,7 @@
 			</div>
 			<h5 class="text-info">Update your details</h5>
 			<div class="control-group">
-				<label class="control-label" for="email">Email</label>
+				<label class="control-label">Email</label>
 				<div class="controls">
 					<input name="email" id="fmEmail" type="text" placeholder="Required" class="span5" value="<?php echo $user->getEmail(); ?>">
 					<div id="email-req-alert"></div>
@@ -45,7 +45,7 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="firstname">First Name</label>
+				<label class="control-label">First Name</label>
 				<div class="controls">
 					<input name="firstname" id="fmFirstName" type="text" placeholder="Required" class="span5" value="<?php echo $user->getFirstName(); ?>">
 					<div id="firstname-req-alert"></div>
@@ -53,7 +53,7 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="lastname">Last Name</label>
+				<label class="control-label">Last Name</label>
 				<div class="controls">
 					<input name="lastname" id="fmLastName" type="text" placeholder="Required" class="span5" value="<?php echo $user->getLastName(); ?>">
 					<div id="lastname-req-alert"></div>
@@ -61,7 +61,7 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="address1">Address Line 1</label>
+				<label class="control-label">Address Line 1</label>
 				<div class="controls">
 					<input name="address1" id="fmAddress1" type="text" placeholder="Required" class="span5" value="<?php echo $user->getAddress1(); ?>">
 					<div id="address1-req-alert"></div>
@@ -69,21 +69,21 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="lastname">Address Line 2</label>
+				<label class="control-label">Address Line 2</label>
 				<div class="controls">
 					<input name="address2" id="fmAddress2" type="text" placeholder="" class="span5" value="<?php echo $user->getAddress2(); ?>">
 					<div id="address2-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="suburb">Suburb</label>
+				<label class="control-label">Suburb</label>
 				<div class="controls">
 					<input name="suburb" id="fmSuburb" type="text" placeholder="" class="span3" value="<?php echo $user->getSuburb(); ?>">
 					<div id="suburb-alert"></div>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="city">City</label>
+				<label class="control-label">City</label>
 				<div class="controls">
 					<input name="city" id="fmCity" type="text" placeholder="Required" class="span3" value="<?php echo $user->getCity(); ?>">
 					<div id="city-req-alert"></div>
@@ -91,7 +91,7 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="phone">Phone</label>
+				<label class="control-label">Phone</label>
 				<div class="controls">
 					<input name="phone" id="fmPhone" type="text" placeholder="" class="span3" value="<?php echo $user->getPhone(); ?>">
 					<div id="phone-alert"></div>

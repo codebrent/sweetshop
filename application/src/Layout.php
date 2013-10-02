@@ -9,6 +9,9 @@ class Layout{
 		$this->viewData = $viewData;
 	}
 	
+	/*
+	 * Displays layout, either AJAX or HTML depending on setting of view type
+	 */
 	public function display(){
 		$type = (isset($this->viewData["type"])) ? $this->viewData["type"] : null;
 		if ($type == "ajax"){

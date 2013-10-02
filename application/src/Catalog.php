@@ -8,7 +8,7 @@ class Catalog {
 	}
 	
 	/**
-	 * 
+	 * Function takes a string to search for and returns an array with product name and productID
 	 * @param string $searchString
 	 */
 	public function search($searchString){

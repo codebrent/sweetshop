@@ -17,7 +17,7 @@
 			?>
 			<tr>
 				<td></td>
-				<td><a href="index.php?s=orderview&p=<?php echo $oldOrder->getOrderID(); ?>"><?php echo $oldOrder->getOrderID(); ?></a></td>
+				<td><a href="index.php?s=orderview&amp;p=<?php echo $oldOrder->getOrderID(); ?>"><?php echo $oldOrder->getOrderID(); ?></a></td>
 				<td><?php echo $oldOrder->getStatus(); ?></td>
 				<td><?php echo '$'.number_format($oldOrder->getTotalCost(), 2); ?></td>
 				<td><?php echo ($oldOrder->getDeliveryDate() != "0000-00-00") ? date("d/m/Y", strtotime($oldOrder->getDeliveryDate())) : ""; ?></td>

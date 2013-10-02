@@ -16,6 +16,9 @@ class Order {
 		$this->getItemList();
 	}
 
+	/*
+	 * Save order object to database or create new order object in database
+	 */
 	public function save(){
 		if ($this->orderID){ //existing ID, update details
 			//will save items which have been set. Otherwise values are from the database

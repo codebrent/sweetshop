@@ -28,8 +28,8 @@
 			?>
 			<tr>
 				<td></td>
-				<td><a href="index.php?s=product&p=<?php echo $orderItem->getProductId(); ?>"><?php echo $orderItem->getProductName(); ?></a>
-				<a href="index.php?s=removeItem&p=<?php echo $orderItem->getProductId(); ?>" class="btn-mini btn-primary">remove</a>
+				<td><a href="index.php?s=product&amp;p=<?php echo $orderItem->getProductId(); ?>"><?php echo $orderItem->getProductName(); ?></a>
+				<a href="index.php?s=removeItem&amp;p=<?php echo $orderItem->getProductId(); ?>" class="btn-mini btn-primary">remove</a>
 				</td>
 				<?php 
 				$qty = $orderItem->getQuantity();

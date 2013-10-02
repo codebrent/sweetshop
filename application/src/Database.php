@@ -11,6 +11,9 @@ class Database{
 	public function __construct(){
 	}
 	
+	/*
+	 * Connets to application database
+	 */
 	public function getDbConnection(){
 		if (!$this->dbConnection){
 			$this->dbConnection = mysqli_connect($this->host,$this->username,$this->password,$this->dbname);			

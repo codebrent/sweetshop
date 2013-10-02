@@ -8,6 +8,7 @@ $(function(){
 	$( "#searchButton" ).click(searchClick);
 });
 
+//Function to submit login page. Verifies fields contain correct information
 function loginSubmit(){
 	//Reset Messageboxes
 	$('#username-req-alert').html('');
@@ -32,23 +33,35 @@ function loginSubmit(){
 	
 }
 
+//Loads search results in main window from AJAX call
 function searchClick(){
+	//get searchbox value
 	term = $('#searchBox').val();
+	//Display message while waiting for server response
 	$('#mainContainer').html('<h4>Searching....</h4>');
+	//send AJAX request containing search term
 	$.get( "index.php", { s: "ajxSearchResult", p: term }, function(data){
 		$('#mainContainer').html(data);
 	});	
 }
 
+//AJAX call to add item to shopping cart
 function buyMe(product, tb){
+	//get quantity
 	qty = tb.val();
+	//Make sure quantity is valid
 	if (qty < 1 || qty > 100 || isNaN(qty)){
 		alert("Please enter a quantity between 1 and 100");
 	} else {
+		//Set button
 		bBuy = '#bBuy' + product;
+		//Display graphic while AJAX loading
 		$(bBuy).html('<img alt="" style="width: 24px; height: 18px;" src="public/img/486.gif">');
+		//Send AJAX request
 		$.get( "index.php", { s: "ajxBuyItem", p: product, qty: qty }, function(buydata){
+			//Display return message
 			$('#msgContainer').html(buydata);
+			//Update shopping cart in header
 			$.get( "index.php", { s: "ajxCartNumOfItems" }, function(cartdata){
 				$('#cartHeader').html(cartdata);
 				$(bBuy).html('Buy');
@@ -57,6 +70,7 @@ function buyMe(product, tb){
 	}
 }
 
+//Function to submit registration details
 function registerSubmit(){
 	//Reset Messageboxes
 	$('#username-req-alert').html('');
@@ -131,6 +145,7 @@ function registerSubmit(){
 		return false;
 	}
 
+	//Set response messages
 	ivUsername = 'The username can only contain letters and numbers. It must not contain a space. It must be at least 6 characters long.';
 	ivPassword = 'Your password must not contain a space. It must be at least 6 characters long.';
 	ivConfirm = 'Your passwords do not match.';
@@ -198,6 +213,7 @@ function registerSubmit(){
 	return true;
 }
 
+//Function to submit edited details
 function editSubmit(){
 	//Reset Messageboxes
 	$('#email-req-alert').html('');
