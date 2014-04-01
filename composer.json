@@ -1,0 +1,8 @@
+{
+    "name": "kiwiframework/sweetshop",
+    "type": "library",
+    "description": "KiwiFrameworkModule",
+    "require": {
+        "php": ">=5.3.0"
+    },
+}
